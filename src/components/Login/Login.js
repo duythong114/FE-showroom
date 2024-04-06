@@ -18,7 +18,7 @@ const Login = (props) => {
                         <div className='login-content row'>
                             <div className='col-12 login-title'>LOGIN YOUR ACCOUNT</div>
                             <div className='col-12 mt-3'>
-                                <label for="email">Email</label>
+                                <label htmlFor="email">Email</label>
                                 <input
                                     id='email'
                                     type='text'
@@ -27,7 +27,7 @@ const Login = (props) => {
                                 />
                             </div>
                             <div className='col-12 mt-3'>
-                                <label for="password">Password</label>
+                                <label htmlFor="password">Password</label>
                                 <input
                                     id='password'
                                     type='password'
