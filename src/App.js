@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import './styles/App.scss';
 // eslint-disable-next-line
 import Nav from './components/Navbar/Nav'
@@ -12,8 +14,9 @@ import {
 
 function App() {
   return (
-    <Router>
-      <div className="app-container">
+    <Fragment>
+      <Router>
+
         {/* <Nav /> */}
 
         <Switch>
@@ -39,8 +42,23 @@ function App() {
             404 NOT FOUND
           </Route>
         </Switch>
-      </div>
-    </Router>
+
+      </Router>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
+    </Fragment>
   );
 }
 

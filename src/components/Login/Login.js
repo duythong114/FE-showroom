@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import './Login.scss';
 
 const Login = (props) => {
     let history = useHistory()
+    const [showPassword, setShowPassword] = useState(false)
 
     const handleRegisterPage = () => {
         history.push('/register')
@@ -28,12 +29,19 @@ const Login = (props) => {
                             </div>
                             <div className='col-12 mt-3'>
                                 <label htmlFor="password">Password</label>
-                                <input
-                                    id='password'
-                                    type='password'
-                                    className='form-control'
-                                    placeholder='Enter your password'
-                                />
+                                <div className='input-password'>
+                                    <input
+                                        id='password'
+                                        type={showPassword ? 'text' : 'password'}
+                                        className='form-control'
+                                        placeholder='Enter your password'
+                                    />
+                                    <span
+                                        onClick={() => setShowPassword(!showPassword)}
+                                    >
+                                        <i className={showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
+                                    </span>
+                                </div>
                             </div>
                             <div className='col-12 mt-3'>
                                 <button className='customized-btn' type='button' >Login</button>

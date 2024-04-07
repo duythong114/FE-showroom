@@ -28,6 +28,17 @@
                 margin-bottom: 3px;
             }
 
+            .input-password {
+                position: relative;
+
+                i {
+                    position: absolute;
+                    right   : 10px;
+                    top     : 10px;
+                    cursor  : pointer;
+                }
+            }
+
             .customized-btn {
                 font-size    : 18px;
                 width        : 100%;

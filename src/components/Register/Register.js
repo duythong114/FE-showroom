@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import './Register.scss';
 
 const Register = (props) => {
+    const [showPassword, setShowPassword] = useState(false)
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -10,12 +14,67 @@ const Register = (props) => {
     const [address, setAddress] = useState("")
     const [phone, setPhone] = useState("")
     const [gender, setGender] = useState("")
+    const [groupId, setGroupId] = useState("")
+
+    const checkValidateInput = () => {
+        let arrInput = [email, password, confirmPassword, firstName, lastName, address, phone, gender, groupId]
+        let arrInputName = ['email', 'password', 'confirmPassword', 'firstName', 'lastName', 'address', 'phone', 'gender', 'groupId']
+        for (let i = 0; i < arrInput.length; i++) {
+            if (!arrInput[i]) {
+                toast.error("Missing parameter: " + arrInputName[i])
+                return false
+            }
+        }
+        return true
+    }
+
+    const checkConfirmPassword = () => {
+        if (!(password === confirmPassword)) {
+            toast.error("Your confirmPassword is incorrect")
+
+            return false
+        }
+        return true
+    }
+
+    const checkLengthPassword = () => {
+        if (!(password.length >= 8)) {
+            toast.error("Your password is too short")
+
+            return false
+        }
+        return true
+    }
+
+    const checkValidEmail = () => {
+        let regx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if (!regx.test(email)) {
+            toast.error("Your email address is not valid")
+
+            return false
+        }
+        return true
+    }
 
     const handleRegisterBtn = () => {
-        alert("me")
-        let userData = { email, password, confirmPassword, firstName, lastName, address, phone, gender }
-        console.log("check user data:", userData)
+        let validInput = checkValidateInput()
+        if (validInput) {
+            let validEmail = checkValidEmail()
+            if (validEmail) {
+                let validPassword = checkLengthPassword()
+                if (validPassword) {
+                    let validConfirmPassword = checkConfirmPassword()
+                    if (validConfirmPassword) {
+                        toast.success("Register successfully");
+                        let userData = { email, password, confirmPassword, firstName, lastName, address, phone, gender, groupId }
+                        console.log("check user data:", userData)
+                    }
+                }
+            }
+        }
     }
+
+
 
     return (
         <div className='register-background'>
@@ -31,35 +90,67 @@ const Register = (props) => {
                                     <input
                                         value={email}
                                         onChange={(event) => setEmail(event.target.value)}
-                                        id='inputEmail' type="email" className="form-control" placeholder="example@gmail.com" />
+                                        id='inputEmail'
+                                        type="email"
+                                        className="form-control"
+                                        placeholder="example@gmail.com" />
                                 </div>
                                 <div className="col-12">
                                     <label htmlFor="inputPassword">Password</label>
-                                    <input
-                                        value={password}
-                                        onChange={(event) => setPassword(event.target.value)}
-                                        id='inputPassword' type="password" className="form-control" placeholder="Password" />
+
+                                    <div className='input-password'>
+                                        <input
+                                            value={password}
+                                            onChange={(event) => setPassword(event.target.value)}
+                                            id='password'
+                                            type={showPassword ? 'text' : 'password'}
+                                            className="form-control"
+                                            placeholder='Enter your password'
+                                        />
+                                        <span
+                                            onClick={() => setShowPassword(!showPassword)}
+                                        >
+                                            <i className={showPassword ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
+                                        </span>
+                                    </div>
+
                                 </div>
                                 <div className="col-12">
                                     <label htmlFor="inputConfirmPassword">Confirm Password</label>
-                                    <input
-                                        value={confirmPassword}
-                                        onChange={(event) => setConfirmPassword(event.target.value)}
-                                        id='inputConfirmPassword' type="password" className="form-control" placeholder="Confirm Password" />
+
+                                    <div className='input-password'>
+                                        <input
+                                            value={confirmPassword}
+                                            onChange={(event) => setConfirmPassword(event.target.value)}
+                                            id='inputConfirmPassword'
+                                            type={showConfirmPassword ? 'text' : 'password'}
+                                            className="form-control"
+                                            placeholder='Confirm your Password'
+                                        />
+                                        <span
+                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        >
+                                            <i className={showConfirmPassword ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div className="col-6">
                                     <label htmlFor="inputFirstName">First name</label>
                                     <input
                                         value={firstName}
                                         onChange={(event) => setFirstName(event.target.value)}
-                                        id='inputFirstName' type="text" className="form-control" placeholder="First name" />
+                                        id='inputFirstName' type="text"
+                                        className="form-control"
+                                        placeholder="First name" />
                                 </div>
                                 <div className="col-6">
                                     <label htmlFor="inputLastName">Last name</label>
                                     <input
                                         value={lastName}
                                         onChange={(event) => setLastName(event.target.value)}
-                                        id='inputLastName' type="text" className="form-control" placeholder="Last name" />
+                                        id='inputLastName' type="text"
+                                        className="form-control"
+                                        placeholder="Last name" />
                                 </div>
 
                                 <div className="col-12">
@@ -67,25 +158,45 @@ const Register = (props) => {
                                     <input
                                         value={address}
                                         onChange={(event) => setAddress(event.target.value)}
-                                        id='inputAddress' type="text" className="form-control" placeholder="1234 Main St" />
+                                        id='inputAddress' type="text"
+                                        className="form-control"
+                                        placeholder="1234 Main St" />
                                 </div>
 
-                                <div className="col-6">
+                                <div className="col-4">
                                     <label htmlFor="inputPhoneNumber">Phone number</label>
                                     <input
                                         value={phone}
                                         onChange={(event) => setPhone(event.target.value)}
-                                        id='inputPhoneNumber' type="text" className="form-control" />
+                                        id='inputPhoneNumber' type="text"
+                                        className="form-control"
+                                    />
                                 </div>
-                                <div className="col-6">
+                                <div className="col-4">
                                     <label htmlFor="inputGender">Gender</label>
                                     <select
                                         value={gender}
                                         onChange={(event) => setGender(event.target.value)}
-                                        id='inputGender' className="form-select">
+                                        id='inputGender'
+                                        className="form-select"
+                                    >
                                         <option hidden></option>
                                         <option value="1">Male</option>
                                         <option value="0">Female</option>
+                                    </select>
+                                </div>
+                                <div className="col-4">
+                                    <label htmlFor="inputGroupId">Group</label>
+                                    <select
+                                        value={groupId}
+                                        onChange={(event) => setGroupId(event.target.value)}
+                                        id='inputGroupId'
+                                        className="form-select"
+                                    >
+                                        <option hidden></option>
+                                        <option value="1">Worker</option>
+                                        <option value="2">Client</option>
+                                        <option value="3">Manager</option>
                                     </select>
                                 </div>
                                 <div className='col-12 mt-3'>
