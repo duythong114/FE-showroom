@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import './Register.scss';
+import { useDispatch } from 'react-redux'
+import { createNewUser } from '../../slices/userSlice'
+import { useHistory } from "react-router-dom";
 
 const Register = (props) => {
+    const dispatch = useDispatch()
+    const history = useHistory()
+
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
@@ -12,13 +18,13 @@ const Register = (props) => {
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [address, setAddress] = useState("")
-    const [phone, setPhone] = useState("")
+    const [phoneNumber, setPhoneNumber] = useState("")
     const [gender, setGender] = useState("")
     const [groupId, setGroupId] = useState("")
 
     const checkValidateInput = () => {
-        let arrInput = [email, password, confirmPassword, firstName, lastName, address, phone, gender, groupId]
-        let arrInputName = ['email', 'password', 'confirmPassword', 'firstName', 'lastName', 'address', 'phone', 'gender', 'groupId']
+        let arrInput = [email, password, confirmPassword, firstName, lastName, address, phoneNumber, gender, groupId]
+        let arrInputName = ['email', 'password', 'confirmPassword', 'firstName', 'lastName', 'address', 'phoneNumber', 'gender', 'groupId']
         for (let i = 0; i < arrInput.length; i++) {
             if (!arrInput[i]) {
                 toast.error("Missing parameter: " + arrInputName[i])
@@ -56,7 +62,7 @@ const Register = (props) => {
         return true
     }
 
-    const handleRegisterBtn = () => {
+    const handleRegisterBtn = async () => {
         let validInput = checkValidateInput()
         if (validInput) {
             let validEmail = checkValidEmail()
@@ -65,9 +71,32 @@ const Register = (props) => {
                 if (validPassword) {
                     let validConfirmPassword = checkConfirmPassword()
                     if (validConfirmPassword) {
-                        toast.success("Register successfully");
-                        let userData = { email, password, confirmPassword, firstName, lastName, address, phone, gender, groupId }
-                        console.log("check user data:", userData)
+                        let userData = { email, password, confirmPassword, firstName, lastName, address, phoneNumber, gender, groupId }
+                        let response = await dispatch(createNewUser(userData))
+
+                        // check error
+                        if (response
+                            && response.payload
+                            && response.payload.response
+                            && response.payload.response.data
+                            && response.payload.response.data.errorCode !== 0
+                        ) {
+                            toast.error(`${response.payload.response.data.errorMessage}`)
+                        }
+
+                        if (response && response.payload && response.payload.errorCode === 0) {
+                            toast.success(`${response.payload.errorMessage}`)
+                            setEmail("")
+                            setPassword("")
+                            setConfirmPassword("")
+                            setAddress("")
+                            setFirstName("")
+                            setLastName("")
+                            setPhoneNumber("")
+                            setGender("")
+                            setGroupId("")
+                            history.push('/login')
+                        }
                     }
                 }
             }
@@ -166,8 +195,8 @@ const Register = (props) => {
                                 <div className="col-4">
                                     <label htmlFor="inputPhoneNumber">Phone number</label>
                                     <input
-                                        value={phone}
-                                        onChange={(event) => setPhone(event.target.value)}
+                                        value={phoneNumber}
+                                        onChange={(event) => setPhoneNumber(event.target.value)}
                                         id='inputPhoneNumber' type="text"
                                         className="form-control"
                                     />

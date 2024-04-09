@@ -1,19 +1,35 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios';
-
-const initialState = {
-    listUsers: [],
-    isLoading: false,
-    isError: false,
-}
+import { getAllUsersService, createNewUserService } from '../services'
 
 export const fetchAllUsers = createAsyncThunk(
     'user/fetchAllUsers',
     async () => {
-        const response = axios.get('http://localhost:8080/api/user/get-all-users')
-        return response.data
+        try {
+            const response = await getAllUsersService()
+            return response
+        } catch (error) {
+            return error;
+        }
     },
 )
+
+export const createNewUser = createAsyncThunk(
+    'user/createNewUser',
+    async (userData, { rejectWithValue }) => {
+        try {
+            const response = await createNewUserService(userData)
+            return response
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    },
+)
+
+const initialState = {
+    listUsers: [],
+    isLoading: false,
+    isError: null,
+}
 
 export const userSlice = createSlice({
     name: 'user',
@@ -22,24 +38,33 @@ export const userSlice = createSlice({
 
     },
     extraReducers: (builder) => {
-        // Add reducers for additional action types here, and handle loading state as needed
-        builder.addCase(fetchAllUsers.pending, (state, action) => {
-            state.isLoading = true
-            state.isError = false
-        })
-        builder.addCase(fetchAllUsers.fulfilled, (state, action) => {
-            state.listUsers = action.payload
-            state.isLoading = false
-            state.isError = false
-        })
-        builder.addCase(fetchAllUsers.rejected, (state, action) => {
-            state.isLoading = false
-            state.isError = true
-        })
+        // fetch all user
+        builder
+            .addCase(fetchAllUsers.pending, (state, action) => {
+                state.isLoading = true
+            })
+            .addCase(fetchAllUsers.fulfilled, (state, action) => {
+                state.listUsers = action.payload.data
+                state.isLoading = false
+            })
+            .addCase(fetchAllUsers.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = action.payload.message
+            })
+
+        // create new user
+        builder
+            .addCase(createNewUser.pending, (state, action) => {
+                state.isLoading = true
+            })
+            .addCase(createNewUser.fulfilled, (state, action) => {
+                state.isLoading = false
+            })
+            .addCase(createNewUser.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = action.payload.message
+            })
     },
 })
-
-// Action creators are generated for each case reducer function
-
 
 export default userSlice.reducer

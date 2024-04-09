@@ -3,10 +3,12 @@ import { useHistory } from "react-router-dom";
 import './Login.scss';
 
 const Login = (props) => {
-    let history = useHistory()
+    const history = useHistory()
+
     const [showPassword, setShowPassword] = useState(false)
 
-    const handleRegisterPage = () => {
+
+    const handleRegisterPageBtn = () => {
         history.push('/register')
     }
 
@@ -54,7 +56,7 @@ const Login = (props) => {
 
                             <div className='col-12'>
                                 <button
-                                    onClick={() => handleRegisterPage()}
+                                    onClick={() => handleRegisterPageBtn()}
                                     className='customized-btn'
                                     type='button'
                                 >
