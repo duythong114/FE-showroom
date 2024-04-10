@@ -60,7 +60,7 @@ const Login = (props) => {
                 {
                     render: `${response.payload.response.data.errorMessage}`,
                     type: toast.TYPE.ERROR,
-                    autoClose: 5000,
+                    autoClose: 2000,
                 })
         }
 
@@ -70,7 +70,7 @@ const Login = (props) => {
                 {
                     render: `${response.payload.errorMessage}`,
                     type: toast.TYPE.SUCCESS,
-                    autoClose: 5000,
+                    autoClose: 2000,
                 })
             setEmail("")
             setPassword("")
@@ -79,7 +79,7 @@ const Login = (props) => {
     }
 
     const handlePressEnter = (event) => {
-        if (event.key === 'Enter' || event.keyCode === 13) {
+        if (event.key === 'Enter' && event.keyCode === 13) {
             handleLoginBtn()
         }
     }

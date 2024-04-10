@@ -12,53 +12,60 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 function App() {
+  const isLoggedIn = useSelector(state => state.user.isLoggedIn)
+
   return (
     <Fragment>
-      <Router>
 
-        {/* <Nav /> */}
+      <div className='route-container'>
+        <Router>
+          {isLoggedIn === true && <Nav />}
 
-        <Switch>
-          <Route path="/" exact>
-            Home
-          </Route>
-          <Route path="/user">
-            <User />
-          </Route>
-          <Route path="/car">
-            Car
-          </Route>
-          <Route path="/about">
-            About
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="*">
-            404 NOT FOUND
-          </Route>
-        </Switch>
+          <Switch>
+            <Route path="/" exact>
+              Home
+            </Route>
+            <Route path="/user">
+              <User />
+            </Route>
+            <Route path="/car">
+              Car
+            </Route>
+            <Route path="/about">
+              About
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
+            <Route path="*">
+              404 NOT FOUND
+            </Route>
+          </Switch>
+        </Router>
 
-      </Router>
+      </div>
 
-      <ToastContainer
-        position="top-center"
-        limit={1}
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <div className='toast-container'>
+        <ToastContainer
+          position="top-center"
+          limit={1}
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </div>
 
     </Fragment>
   );

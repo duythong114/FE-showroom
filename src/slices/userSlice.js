@@ -42,6 +42,7 @@ export const fetchAllUsers = createAsyncThunk(
 )
 
 const initialState = {
+    isLoggedIn: false,
     listUsers: [],
     isLoading: false,
     isError: null,
@@ -59,13 +60,16 @@ export const userSlice = createSlice({
         builder
             .addCase(loginUser.pending, (state, action) => {
                 state.isLoading = true
+                state.isLoggedIn = false
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLoading = false
+                state.isLoggedIn = true
                 state.user = action.payload.data
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.isLoading = false
+                state.isLoggedIn = false
                 state.isError = action.payload.message
             })
 

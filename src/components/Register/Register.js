@@ -88,7 +88,7 @@ const Register = (props) => {
                                 {
                                     render: `${response.payload.response.data.errorMessage}`,
                                     type: toast.TYPE.ERROR,
-                                    autoClose: 5000,
+                                    autoClose: 2000,
                                 })
                         }
 
@@ -98,7 +98,7 @@ const Register = (props) => {
                                 {
                                     render: `${response.payload.errorMessage}`,
                                     type: toast.TYPE.SUCCESS,
-                                    autoClose: 5000,
+                                    autoClose: 2000,
                                 })
 
                             setEmail("")
