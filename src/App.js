@@ -6,6 +6,7 @@ import './styles/App.scss';
 import Nav from './components/Navbar/Nav'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
+import User from './components/User/User'
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,11 +24,11 @@ function App() {
           <Route path="/" exact>
             Home
           </Route>
-          <Route path="/new">
-            New
+          <Route path="/user">
+            <User />
           </Route>
-          <Route path="/contact">
-            Contact
+          <Route path="/car">
+            Car
           </Route>
           <Route path="/about">
             About
