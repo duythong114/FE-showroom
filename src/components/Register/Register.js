@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { toast } from 'react-toastify';
 import './Register.scss';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createNewUser } from '../../slices/userSlice'
 import { useHistory } from "react-router-dom";
 
 const Register = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
+    const isLoading = useSelector(state => state.user.isLoading)
+    const toastId = useRef()
 
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -81,11 +83,24 @@ const Register = (props) => {
                             && response.payload.response.data
                             && response.payload.response.data.errorCode !== 0
                         ) {
-                            toast.error(`${response.payload.response.data.errorMessage}`)
+                            // update toast
+                            toast.update(toastId.current,
+                                {
+                                    render: `${response.payload.response.data.errorMessage}`,
+                                    type: toast.TYPE.ERROR,
+                                    autoClose: 5000,
+                                })
                         }
 
                         if (response && response.payload && response.payload.errorCode === 0) {
-                            toast.success(`${response.payload.errorMessage}`)
+                            // update toast
+                            toast.update(toastId.current,
+                                {
+                                    render: `${response.payload.errorMessage}`,
+                                    type: toast.TYPE.SUCCESS,
+                                    autoClose: 5000,
+                                })
+
                             setEmail("")
                             setPassword("")
                             setConfirmPassword("")
@@ -103,7 +118,10 @@ const Register = (props) => {
         }
     }
 
-
+    // initital toast 
+    if (isLoading === true) {
+        toastId.current = toast.warn("Data is loading...", { autoClose: false })
+    }
 
     return (
         <div className='register-background'>

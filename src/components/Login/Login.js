@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import './Login.scss';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../slices/userSlice';
 
 const Login = (props) => {
     const history = useHistory()
     const dispatch = useDispatch()
+    const toastId = useRef()
+    const isLoading = useSelector(state => state.user.isLoading)
 
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
@@ -53,23 +55,46 @@ const Login = (props) => {
             && response.payload.response.data
             && response.payload.response.data.errorCode !== 0
         ) {
-            toast.error(`${response.payload.response.data.errorMessage}`)
+            // update toast
+            toast.update(toastId.current,
+                {
+                    render: `${response.payload.response.data.errorMessage}`,
+                    type: toast.TYPE.ERROR,
+                    autoClose: 5000,
+                })
         }
 
         if (response && response.payload && response.payload.errorCode === 0) {
-            toast.success(`${response.payload.errorMessage}`)
+            // update toast
+            toast.update(toastId.current,
+                {
+                    render: `${response.payload.errorMessage}`,
+                    type: toast.TYPE.SUCCESS,
+                    autoClose: 5000,
+                })
             setEmail("")
             setPassword("")
             history.push('/user')
         }
     }
 
+    const handlePressEnter = (event) => {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            handleLoginBtn()
+        }
+    }
+
+    // initital toast 
+    if (isLoading === true) {
+        toastId.current = toast.warn("Data is loading...", { autoClose: false })
+    }
+
     return (
         <div className='login-background'>
             <div className='container'>
                 <div className='row'>
-                    <div className='col-6'></div>
-                    <div className='login-container col-3'>
+                    <div className='col-4'></div>
+                    <div className='login-container col-4'>
                         <div className='login-content row'>
                             <form className="row g-3">
                                 <div className='col-12 login-title'>LOGIN YOUR ACCOUNT</div>
@@ -88,6 +113,7 @@ const Login = (props) => {
                                     <label htmlFor="password">Password</label>
                                     <div className='input-password'>
                                         <input
+                                            onKeyDown={(event) => handlePressEnter(event)}
                                             value={password}
                                             onChange={(event) => setPassword(event.target.value)}
                                             id='password'
@@ -138,7 +164,7 @@ const Login = (props) => {
                             </form>
                         </div>
                     </div>
-                    <div className='col-3'></div>
+                    <div className='col-4'></div>
                 </div>
             </div>
         </div>
