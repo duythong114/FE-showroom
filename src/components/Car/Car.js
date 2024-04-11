@@ -1,13 +1,13 @@
 import React from 'react';
-import './User.scss';
+import './Car.scss';
 
-const User = (props) => {
+const Car = (props) => {
 
     return (
         <div className='users-container' >
-            <h1>User Page ...</h1>
+            <h1>Car Page ...</h1>
         </div>
     )
 }
 
-export default User;
+export default Car;
