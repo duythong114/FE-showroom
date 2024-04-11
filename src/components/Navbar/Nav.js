@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './Nav.scss';
 import { NavLink, useLocation } from "react-router-dom";
 import { useSelector } from 'react-redux';
@@ -6,11 +6,6 @@ import { useSelector } from 'react-redux';
 const Nav = (props) => {
     const isLoggedIn = useSelector(state => state.user.isLoggedIn)
     let location = useLocation()
-
-    useEffect(() => {
-        console.log("check location:", location)
-        // eslint-disable-next-line
-    }, [])
 
     return (
         <>

@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 const Register = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const isLoading = useSelector(state => state.user.isLoading)
+    const isRegistering = useSelector(state => state.user.isRegistering)
     const toastId = useRef()
 
     const [showPassword, setShowPassword] = useState(false)
@@ -119,7 +119,7 @@ const Register = (props) => {
     }
 
     // initital toast 
-    if (isLoading === true) {
+    if (isRegistering === true) {
         toastId.current = toast.warn("Data is loading...", { autoClose: false })
     }
 

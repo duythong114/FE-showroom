@@ -9,7 +9,7 @@ const Login = (props) => {
     const history = useHistory()
     const dispatch = useDispatch()
     const toastId = useRef()
-    const isLoading = useSelector(state => state.user.isLoading)
+    const isLogging = useSelector(state => state.user.isLogging)
 
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
@@ -85,7 +85,7 @@ const Login = (props) => {
     }
 
     // initital toast 
-    if (isLoading === true) {
+    if (isLogging === true) {
         toastId.current = toast.warn("Data is loading...", { autoClose: false })
     }
 
