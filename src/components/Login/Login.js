@@ -74,7 +74,7 @@ const Login = (props) => {
                 })
             setEmail("")
             setPassword("")
-            history.push('/user')
+            history.push('/')
         }
     }
 

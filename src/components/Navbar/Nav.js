@@ -5,12 +5,13 @@ import { useSelector } from 'react-redux';
 
 const Nav = (props) => {
     const isLoggedIn = useSelector(state => state.user.isLoggedIn)
+    const user = useSelector(state => state.user.user)
     let location = useLocation()
 
     return (
-        <>
+        <div>
             {!(location.pathname === "/login" || location.pathname === "/register") &&
-                <div className="topnav">
+                <div className="topnav fixed-top">
                     <NavLink to="/" exact>Home</NavLink>
 
                     {isLoggedIn === true
@@ -19,6 +20,13 @@ const Nav = (props) => {
                             <NavLink to="/user">User</NavLink>
                             <NavLink to="/car">Car</NavLink>
                             <NavLink to="/payment">Payment</NavLink>
+                            <NavLink to="/personal">Personal</NavLink>
+
+                            <div className='user-info'>
+                                <h3 className='welcome-text'>welcome&nbsp;</h3>
+                                <h3 className='user-role'>{user && user.Group.name}:</h3>
+                                <h3 className='user-name'>{user && user.firstName}</h3>
+                            </div>
                         </>
                         :
                         <>
@@ -27,7 +35,7 @@ const Nav = (props) => {
                     }
                 </div>
             }
-        </>
+        </div>
     );
 }
 

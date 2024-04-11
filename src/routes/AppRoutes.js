@@ -3,11 +3,13 @@ import {
     Route
 } from "react-router-dom";
 
+import Home from "../components/Home/Home";
 import Login from '../components/Login/Login'
 import Register from '../components/Register/Register'
 import User from '../components/User/User'
 import Car from "../components/Car/Car";
 import Payment from "../components/Payment/Payment";
+import Personal from "../components/Personal/Personal";
 import PrivateRoute from "./PrivateRoute";
 
 const AppRoutes = () => {
@@ -17,9 +19,10 @@ const AppRoutes = () => {
                 <PrivateRoute path="/user" component={User} />
                 <PrivateRoute path="/car" component={Car} />
                 <PrivateRoute path="/payment" component={Payment} />
+                <PrivateRoute path="/personal" component={Personal} />
 
                 <Route path="/" exact>
-                    <h1>Home Page</h1>
+                    <Home />
                 </Route>
                 <Route path="/login">
                     <Login />

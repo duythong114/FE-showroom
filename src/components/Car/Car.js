@@ -4,7 +4,7 @@ import './Car.scss';
 const Car = (props) => {
 
     return (
-        <div className='users-container' >
+        <div className='car-container' >
             <h1>Car Page ...</h1>
         </div>
     )

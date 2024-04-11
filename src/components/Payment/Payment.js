@@ -4,7 +4,7 @@ import './Payment.scss';
 const Payment = (props) => {
 
     return (
-        <div className='users-container' >
+        <div className='payment-container' >
             <h1>Payment Page ...</h1>
         </div>
     )
