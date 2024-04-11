@@ -27,6 +27,7 @@ const User = (props) => {
                             <th scope="col">LastName</th>
                             <th scope="col">Address</th>
                             <th scope="col">PhoneNumber</th>
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,6 +40,12 @@ const User = (props) => {
                                     <td>{item.lastName}</td>
                                     <td>{item.address}</td>
                                     <td>{item.phoneNumber}</td>
+                                    <td>
+                                        <div className='action-container'>
+                                            <button className='btn btn-warning'>Edit</button>
+                                            <button className='btn btn-danger'>Delete</button>
+                                        </div>
+                                    </td>
                                 </tr>
                             ))
                         }
