@@ -17,10 +17,10 @@ const Nav = (props) => {
                     {isLoggedIn === true
                         ?
                         <>
-                            <NavLink to="/user">User</NavLink>
+                            <NavLink to="/personal">Personal</NavLink>
                             <NavLink to="/car">Car</NavLink>
                             <NavLink to="/payment">Payment</NavLink>
-                            <NavLink to="/personal">Personal</NavLink>
+                            <NavLink to="/user">User</NavLink>
 
                             <div className='user-info'>
                                 <h3 className='welcome-text'>welcome&nbsp;</h3>

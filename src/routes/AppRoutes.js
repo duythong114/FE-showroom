@@ -16,10 +16,10 @@ const AppRoutes = () => {
     return (
         <>
             <Switch>
-                <PrivateRoute path="/user" component={User} />
+                <PrivateRoute path="/personal" component={Personal} />
                 <PrivateRoute path="/car" component={Car} />
                 <PrivateRoute path="/payment" component={Payment} />
-                <PrivateRoute path="/personal" component={Personal} />
+                <PrivateRoute path="/user" component={User} />
 
                 <Route path="/" exact>
                     <Home />

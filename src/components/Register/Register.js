@@ -242,7 +242,7 @@ const Register = (props) => {
                                     >
                                         <option hidden></option>
                                         <option value="1">Worker</option>
-                                        <option value="2">Client</option>
+                                        <option value="2">Customer</option>
                                         <option value="3">Manager</option>
                                     </select>
                                 </div>

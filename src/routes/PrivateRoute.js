@@ -4,6 +4,7 @@ import {
 } from "react-router-dom";
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 const PrivateRoute = (props) => {
     const isLoggedIn = useSelector(state => state.user.isLoggedIn)
@@ -12,6 +13,7 @@ const PrivateRoute = (props) => {
     useEffect(() => {
         if (isLoggedIn === false) {
             history.push("/login")
+            toast.error("You need to login")
         }
         // eslint-disable-next-line
     }, [])

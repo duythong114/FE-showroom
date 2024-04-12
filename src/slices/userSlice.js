@@ -31,9 +31,9 @@ export const createNewUser = createAsyncThunk(
 
 export const fetchAllUsers = createAsyncThunk(
     'user/fetchAllUsers',
-    async () => {
+    async (pagination) => {
         try {
-            const response = await getAllUsersService()
+            const response = await getAllUsersService(pagination)
             return response
         } catch (error) {
             return error;
@@ -49,6 +49,7 @@ const initialState = {
     listUsers: [],
     isError: null,
     user: null,
+    totalPages: 0,
 }
 
 export const userSlice = createSlice({
@@ -94,7 +95,8 @@ export const userSlice = createSlice({
                 state.isLoading = true
             })
             .addCase(fetchAllUsers.fulfilled, (state, action) => {
-                state.listUsers = action.payload.data
+                state.listUsers = action.payload.data.users
+                state.totalPages = action.payload.data.totalPages
                 state.isLoading = false
             })
             .addCase(fetchAllUsers.rejected, (state, action) => {

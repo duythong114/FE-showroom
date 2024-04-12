@@ -21,8 +21,8 @@ const createNewUserService = (userData) => {
     })
 }
 
-const getAllUsersService = () => {
-    return axios.get('/api/user/get-all-users')
+const getAllUsersService = (pagination) => {
+    return axios.get(`/api/user/get-all-users?page=${pagination.page}&limit=${pagination.limit}`)
 }
 
 export {

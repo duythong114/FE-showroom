@@ -1,19 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './User.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllUsers } from '../../slices/userSlice';
+import ReactPaginate from 'react-paginate';
 
 const User = (props) => {
     const dispatch = useDispatch()
     const listUsers = useSelector(state => state.user.listUsers)
     const isLoggedIn = useSelector(state => state.user.isLoggedIn)
+    const totalPages = useSelector(state => state.user.totalPages)
+
+    const [page, setPage] = useState(1)
+    const [limit, setLimit] = useState(2)
 
     useEffect(() => {
         if (isLoggedIn === true) {
-            dispatch(fetchAllUsers())
+            let pagination = { page, limit }
+            dispatch(fetchAllUsers(pagination))
         }
         // eslint-disable-next-line
-    }, [])
+    }, [page])
+
+    const handlePageClick = (event) => {
+        setPage(event.selected + 1)
+    }
 
     return (
         <div className='users-container' >
@@ -52,6 +62,29 @@ const User = (props) => {
 
                     </tbody>
                 </table>
+
+                {totalPages && totalPages > 0 &&
+                    <ReactPaginate
+                        nextLabel="next >"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={3}
+                        marginPagesDisplayed={3}
+                        pageCount={totalPages}
+                        previousLabel="< previous"
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        containerClassName="pagination"
+                        activeClassName="active"
+                        renderOnZeroPageCount={null}
+                    />
+                }
             </div>
         </div>
     )
