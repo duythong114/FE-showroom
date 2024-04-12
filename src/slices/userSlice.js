@@ -3,6 +3,7 @@ import {
     getAllUsersService,
     createNewUserService,
     loginUserService,
+    getUserByIdService,
 } from '../services'
 
 export const loginUser = createAsyncThunk(
@@ -41,15 +42,38 @@ export const fetchAllUsers = createAsyncThunk(
     },
 )
 
+export const getUserById = createAsyncThunk(
+    'user/getUserById',
+    async (userId) => {
+        try {
+            const response = await getUserByIdService(userId)
+            return response
+        } catch (error) {
+            return error;
+        }
+    },
+)
+
 const initialState = {
+    // common state
+    isError: null,
+
+    // login state
     isLoggedIn: false,
     isLogging: false,
-    isRegistering: false,
-    isLoading: false,
-    listUsers: [],
-    isError: null,
     user: null,
+
+    // register state
+    isRegistering: false,
+
+    // fetch all users state
+    isLoadingAllUsers: false,
+    listUsers: [],
     totalPages: 0,
+
+    // fetch user by id state
+    isLoadingUserById: false,
+    detailUser: null,
 }
 
 export const userSlice = createSlice({
@@ -92,15 +116,29 @@ export const userSlice = createSlice({
         // fetch all user
         builder
             .addCase(fetchAllUsers.pending, (state, action) => {
-                state.isLoading = true
+                state.isLoadingAllUsers = true
             })
             .addCase(fetchAllUsers.fulfilled, (state, action) => {
                 state.listUsers = action.payload.data.users
                 state.totalPages = action.payload.data.totalPages
-                state.isLoading = false
+                state.isLoadingAllUsers = false
             })
             .addCase(fetchAllUsers.rejected, (state, action) => {
-                state.isLoading = false
+                state.isLoadingAllUsers = false
+                state.isError = action.payload.message
+            })
+
+        // fetch user by id
+        builder
+            .addCase(getUserById.pending, (state, action) => {
+                state.isLoadingUserById = true
+            })
+            .addCase(getUserById.fulfilled, (state, action) => {
+                state.detailUser = action.payload.data
+                state.isLoadingUserById = false
+            })
+            .addCase(getUserById.rejected, (state, action) => {
+                state.isLoadingUserById = false
                 state.isError = action.payload.message
             })
     },

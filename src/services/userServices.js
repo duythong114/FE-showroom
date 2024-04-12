@@ -25,8 +25,13 @@ const getAllUsersService = (pagination) => {
     return axios.get(`/api/user/get-all-users?page=${pagination.page}&limit=${pagination.limit}`)
 }
 
+const getUserByIdService = (userId) => {
+    return axios.get(`/api/user/get-one-user/${userId}`)
+}
+
 export {
     loginUserService,
     createNewUserService,
     getAllUsersService,
+    getUserByIdService,
 }

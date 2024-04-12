@@ -20,7 +20,7 @@ const Personal = (props) => {
                         <p>Address: {user.address}</p>
                         <p>Phonenumber: {user.phoneNumber}</p>
                         <p>Gender: {user.gender === 1 ? "Male" : "Female"}</p>
-                        <p>Role: {user.Group.name}</p>
+                        <p>Group: {user.Group.name}</p>
                         <p>Description: {user.Group.description}</p>
                     </div>
                 </div>

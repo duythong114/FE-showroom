@@ -6,11 +6,13 @@ import {
 import Home from "../components/Home/Home";
 import Login from '../components/Login/Login'
 import Register from '../components/Register/Register'
-import User from '../components/User/User'
+import User from '../components/ManageUser/User'
 import Car from "../components/Car/Car";
 import Payment from "../components/Payment/Payment";
 import Personal from "../components/Personal/Personal";
+import DetailUser from "../components/ManageUser/DetailUser";
 import PrivateRoute from "./PrivateRoute";
+
 
 const AppRoutes = () => {
     return (
@@ -19,7 +21,9 @@ const AppRoutes = () => {
                 <PrivateRoute path="/personal" component={Personal} />
                 <PrivateRoute path="/car" component={Car} />
                 <PrivateRoute path="/payment" component={Payment} />
-                <PrivateRoute path="/user" component={User} />
+
+                <PrivateRoute path="/user" exact component={User} />
+                <PrivateRoute path="/user/detail/:id" component={DetailUser} />
 
                 <Route path="/" exact>
                     <Home />

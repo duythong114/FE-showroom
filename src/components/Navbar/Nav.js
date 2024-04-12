@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const Nav = (props) => {
     const isLoggedIn = useSelector(state => state.user.isLoggedIn)
     const user = useSelector(state => state.user.user)
-    let location = useLocation()
+    const location = useLocation()
 
     return (
         <div>
@@ -20,7 +20,7 @@ const Nav = (props) => {
                             <NavLink to="/personal">Personal</NavLink>
                             <NavLink to="/car">Car</NavLink>
                             <NavLink to="/payment">Payment</NavLink>
-                            <NavLink to="/user">User</NavLink>
+                            <NavLink to="/user" exact>User</NavLink>
 
                             <div className='user-info'>
                                 <h3 className='welcome-text'>welcome&nbsp;</h3>

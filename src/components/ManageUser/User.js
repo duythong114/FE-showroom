@@ -3,14 +3,17 @@ import './User.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllUsers } from '../../slices/userSlice';
 import ReactPaginate from 'react-paginate';
+import { useHistory } from "react-router-dom";
 
 const User = (props) => {
     const dispatch = useDispatch()
+    const history = useHistory()
     const listUsers = useSelector(state => state.user.listUsers)
     const isLoggedIn = useSelector(state => state.user.isLoggedIn)
     const totalPages = useSelector(state => state.user.totalPages)
 
     const [page, setPage] = useState(1)
+    // eslint-disable-next-line
     const [limit, setLimit] = useState(2)
 
     useEffect(() => {
@@ -21,8 +24,13 @@ const User = (props) => {
         // eslint-disable-next-line
     }, [page])
 
+    // this function is from react-paginate
     const handlePageClick = (event) => {
         setPage(event.selected + 1)
+    }
+
+    const handleDetailBtn = (data) => {
+        history.push(`/user/detail/${data.id}`)
     }
 
     return (
@@ -35,8 +43,7 @@ const User = (props) => {
                             <th scope="col">Email</th>
                             <th scope="col">FirstName</th>
                             <th scope="col">LastName</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">PhoneNumber</th>
+                            <th scope="col">Group</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -48,12 +55,17 @@ const User = (props) => {
                                     <td>{item.email}</td>
                                     <td>{item.firstName}</td>
                                     <td>{item.lastName}</td>
-                                    <td>{item.address}</td>
-                                    <td>{item.phoneNumber}</td>
+                                    <td>{item.Group.name}</td>
                                     <td>
                                         <div className='action-container'>
                                             <button className='btn btn-warning'>Edit</button>
                                             <button className='btn btn-danger'>Delete</button>
+                                            <button
+                                                className='btn btn-success'
+                                                onClick={() => handleDetailBtn(item)}
+                                            >
+                                                Detail
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
