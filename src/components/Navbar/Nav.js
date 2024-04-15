@@ -24,7 +24,7 @@ const Nav = (props) => {
 
                             <div className='user-info'>
                                 <h3 className='welcome-text'>welcome&nbsp;</h3>
-                                <h3 className='user-role'>{user && user.Group.name}:</h3>
+                                <h3 className='user-role'>{user && user.Group && user.Group.name}:</h3>
                                 <h3 className='user-name'>{user && user.firstName}</h3>
                             </div>
                         </>

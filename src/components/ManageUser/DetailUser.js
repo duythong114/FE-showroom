@@ -20,6 +20,8 @@ const DetailUser = (props) => {
         history.push("/user")
     }
 
+    // console.log(window.location.pathname);
+
     return (
         <div className='detail-background'>
             {detailUser &&
