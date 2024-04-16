@@ -4,6 +4,7 @@ import {
     registerNewUserService,
     loginUserService,
     getUserByIdService,
+    getUserRefreshService,
 } from '../services'
 
 export const loginUser = createAsyncThunk(
@@ -54,6 +55,18 @@ export const getUserById = createAsyncThunk(
     },
 )
 
+export const getUserRefresh = createAsyncThunk(
+    'user/getUserRefresh',
+    async () => {
+        try {
+            const response = await getUserRefreshService()
+            return response
+        } catch (error) {
+            return error;
+        }
+    },
+)
+
 const initialState = {
     // common state
     isError: null,
@@ -74,6 +87,9 @@ const initialState = {
     // fetch user by id state
     isLoadingUserById: false,
     detailUser: null,
+
+    // fetch user when refresh
+    isRefreshingUser: false,
 }
 
 export const userSlice = createSlice({
@@ -100,7 +116,7 @@ export const userSlice = createSlice({
                 state.isError = action.payload.message
             })
 
-        // create new user
+        // register new user
         builder
             .addCase(registerNewUser.pending, (state, action) => {
                 state.isRegistering = true
@@ -141,6 +157,23 @@ export const userSlice = createSlice({
                 state.isLoadingUserById = false
                 state.isError = action.payload.message
             })
+
+        // fetch user when refresh
+        builder
+            .addCase(getUserRefresh.pending, (state, action) => {
+                state.isRefreshingUser = true
+            })
+            .addCase(getUserRefresh.fulfilled, (state, action) => {
+                state.isAuthenticated = true
+                state.isRefreshingUser = false
+                state.user = action.payload?.data
+            })
+            .addCase(getUserRefresh.rejected, (state, action) => {
+                state.isAuthenticated = false
+                state.isRefreshingUser = false
+                state.isError = action.payload.message
+            })
+
     },
 })
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import './Login.scss';
 import { toast } from 'react-toastify';
@@ -10,6 +10,8 @@ const Login = (props) => {
     const dispatch = useDispatch()
     const toastId = useRef()
     const isLogging = useSelector(state => state.user.isLogging)
+    const isAuthenticated = useSelector(state => state.user.isAuthenticated)
+    const user = useSelector(state => state.user.user)
 
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
@@ -88,6 +90,13 @@ const Login = (props) => {
     if (isLogging === true) {
         toastId.current = toast.warn("Data is loading...", { autoClose: false })
     }
+
+    useEffect(() => {
+        if (isAuthenticated && user) {
+            history.push('/')
+        }
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <div className='login-background'>

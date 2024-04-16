@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 const User = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const isAuthenticated = useSelector(state => state.user.isAuthenticated)
     const listUsers = useSelector(state => state.user.listUsers)
     const totalPages = useSelector(state => state.user.totalPages)
 
@@ -17,10 +16,8 @@ const User = (props) => {
     const [limit, setLimit] = useState(2)
 
     useEffect(() => {
-        if (isAuthenticated) {
-            let pagination = { page, limit }
-            dispatch(fetchAllUsers(pagination))
-        }
+        let pagination = { page, limit }
+        dispatch(fetchAllUsers(pagination))
         // eslint-disable-next-line
     }, [page])
 

@@ -14,7 +14,7 @@ const Nav = (props) => {
                 <div className="topnav fixed-top">
                     <NavLink to="/" exact>Home</NavLink>
 
-                    {isAuthenticated === true
+                    {(isAuthenticated && user)
                         ?
                         <>
                             <NavLink to="/personal">Personal</NavLink>

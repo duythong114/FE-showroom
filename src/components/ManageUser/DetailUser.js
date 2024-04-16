@@ -9,15 +9,13 @@ const DetailUser = (props) => {
     let queryParameter = props.location.search
     let userId = queryParameter.split("?id=")[1]
 
-    const isAuthenticated = useSelector(state => state.user.isAuthenticated)
+    // const isAuthenticated = useSelector(state => state.user.isAuthenticated)
     const detailUser = useSelector(state => state.user.detailUser)
     const history = useHistory()
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (isAuthenticated) {
-            dispatch(getUserById(userId))
-        }
+        dispatch(getUserById(userId))
         // eslint-disable-next-line
     }, [userId])
 

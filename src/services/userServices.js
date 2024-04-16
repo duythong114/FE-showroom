@@ -29,9 +29,14 @@ const getUserByIdService = (userId) => {
     return axios.get(`/api/user/get-one-user?id=${userId}`)
 }
 
+const getUserRefreshService = () => {
+    return axios.get('/api/user/get-user-refresh')
+}
+
 export {
     loginUserService,
     registerNewUserService,
     getAllUsersService,
     getUserByIdService,
+    getUserRefreshService,
 }

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import './Register.scss';
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,6 +8,8 @@ import { useHistory } from "react-router-dom";
 const Register = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
+    const isAuthenticated = useSelector(state => state.user.isAuthenticated)
+    const user = useSelector(state => state.user.user)
     const isRegistering = useSelector(state => state.user.isRegistering)
     const toastId = useRef()
 
@@ -122,6 +124,13 @@ const Register = (props) => {
     if (isRegistering === true) {
         toastId.current = toast.warn("Data is loading...", { autoClose: false })
     }
+
+    useEffect(() => {
+        if (isAuthenticated && user) {
+            history.push('/')
+        }
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <div className='register-background'>

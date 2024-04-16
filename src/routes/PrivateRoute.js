@@ -1,28 +1,23 @@
-import { useEffect } from "react";
 import {
     Route
 } from "react-router-dom";
 import { useSelector } from 'react-redux';
-import { useHistory } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { Redirect } from "react-router-dom";
 
 const PrivateRoute = (props) => {
     const isAuthenticated = useSelector(state => state.user.isAuthenticated)
-    const history = useHistory()
+    const user = useSelector(state => state.user.user)
 
-    useEffect(() => {
-        if (isAuthenticated === false) {
-            history.push("/login")
-            toast.error("Please login to continue")
-        }
-        // eslint-disable-next-line
-    }, [])
-
-    return (
-        <>
-            <Route path={props.path} component={props.component} />
-        </>
-    )
+    if (isAuthenticated && user) {
+        return (
+            <>
+                <Route path={props.path} component={props.component} />
+            </>
+        )
+    }
+    else {
+        return Redirect("/login")
+    }
 }
 
 export default PrivateRoute;
