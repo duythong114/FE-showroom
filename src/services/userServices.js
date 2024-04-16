@@ -8,8 +8,8 @@ const loginUserService = (userData) => {
     })
 }
 
-const createNewUserService = (userData) => {
-    return axios.post('/api/user/create-user', {
+const registerNewUserService = (userData) => {
+    return axios.post('/api/user/register', {
         email: userData.email,
         password: userData.password,
         firstName: userData.firstName,
@@ -26,12 +26,12 @@ const getAllUsersService = (pagination) => {
 }
 
 const getUserByIdService = (userId) => {
-    return axios.get(`/api/user/get-one-user/${userId}`)
+    return axios.get(`/api/user/get-one-user?id=${userId}`)
 }
 
 export {
     loginUserService,
-    createNewUserService,
+    registerNewUserService,
     getAllUsersService,
     getUserByIdService,
 }

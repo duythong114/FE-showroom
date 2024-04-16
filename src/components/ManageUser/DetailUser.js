@@ -5,22 +5,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
 const DetailUser = (props) => {
-    const userId = props.match.params.id
 
+    let queryParameter = props.location.search
+    let userId = queryParameter.split("?id=")[1]
+
+    const isAuthenticated = useSelector(state => state.user.isAuthenticated)
     const detailUser = useSelector(state => state.user.detailUser)
     const history = useHistory()
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getUserById(userId))
+        if (isAuthenticated) {
+            dispatch(getUserById(userId))
+        }
         // eslint-disable-next-line
     }, [userId])
 
     const handleCombackBtn = () => {
         history.push("/user")
     }
-
-    // console.log(window.location.pathname);
 
     return (
         <div className='detail-background'>

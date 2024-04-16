@@ -4,7 +4,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
 const Nav = (props) => {
-    const isLoggedIn = useSelector(state => state.user.isLoggedIn)
+    const isAuthenticated = useSelector(state => state.user.isAuthenticated)
     const user = useSelector(state => state.user.user)
     const location = useLocation()
 
@@ -14,7 +14,7 @@ const Nav = (props) => {
                 <div className="topnav fixed-top">
                     <NavLink to="/" exact>Home</NavLink>
 
-                    {isLoggedIn === true
+                    {isAuthenticated === true
                         ?
                         <>
                             <NavLink to="/personal">Personal</NavLink>

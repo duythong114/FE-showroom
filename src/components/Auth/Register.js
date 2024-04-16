@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { toast } from 'react-toastify';
 import './Register.scss';
 import { useDispatch, useSelector } from 'react-redux'
-import { createNewUser } from '../../slices/userSlice'
+import { registerNewUser } from '../../slices/userSlice'
 import { useHistory } from "react-router-dom";
 
 const Register = (props) => {
@@ -74,7 +74,7 @@ const Register = (props) => {
                     let validConfirmPassword = checkConfirmPassword()
                     if (validConfirmPassword) {
                         let userData = { email, password, confirmPassword, firstName, lastName, address, phoneNumber, gender, groupId }
-                        let response = await dispatch(createNewUser(userData))
+                        let response = await dispatch(registerNewUser(userData))
 
                         // check error
                         if (response

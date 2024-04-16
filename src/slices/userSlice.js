@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import {
     getAllUsersService,
-    createNewUserService,
+    registerNewUserService,
     loginUserService,
     getUserByIdService,
 } from '../services'
@@ -18,11 +18,11 @@ export const loginUser = createAsyncThunk(
     },
 )
 
-export const createNewUser = createAsyncThunk(
-    'user/createNewUser',
+export const registerNewUser = createAsyncThunk(
+    'user/registerNewUser',
     async (userData, { rejectWithValue }) => {
         try {
-            const response = await createNewUserService(userData)
+            const response = await registerNewUserService(userData)
             return response
         } catch (error) {
             return rejectWithValue(error);
@@ -59,7 +59,7 @@ const initialState = {
     isError: null,
 
     // login state
-    isLoggedIn: false,
+    isAuthenticated: false,
     isLogging: false,
     user: null,
 
@@ -87,28 +87,28 @@ export const userSlice = createSlice({
         builder
             .addCase(loginUser.pending, (state, action) => {
                 state.isLogging = true
-                state.isLoggedIn = false
+                state.isAuthenticated = false
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLogging = false
-                state.isLoggedIn = true
-                state.user = action.payload.data
+                state.isAuthenticated = true
+                state.user = action.payload?.data?.user
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.isLogging = false
-                state.isLoggedIn = false
+                state.isAuthenticated = false
                 state.isError = action.payload.message
             })
 
         // create new user
         builder
-            .addCase(createNewUser.pending, (state, action) => {
+            .addCase(registerNewUser.pending, (state, action) => {
                 state.isRegistering = true
             })
-            .addCase(createNewUser.fulfilled, (state, action) => {
+            .addCase(registerNewUser.fulfilled, (state, action) => {
                 state.isRegistering = false
             })
-            .addCase(createNewUser.rejected, (state, action) => {
+            .addCase(registerNewUser.rejected, (state, action) => {
                 state.isRegistering = false
                 state.isError = action.payload.message
             })
@@ -119,9 +119,9 @@ export const userSlice = createSlice({
                 state.isLoadingAllUsers = true
             })
             .addCase(fetchAllUsers.fulfilled, (state, action) => {
-                state.listUsers = action.payload.data.users
-                state.totalPages = action.payload.data.totalPages
                 state.isLoadingAllUsers = false
+                state.listUsers = action.payload?.data?.users
+                state.totalPages = action.payload?.data?.totalPages
             })
             .addCase(fetchAllUsers.rejected, (state, action) => {
                 state.isLoadingAllUsers = false
@@ -134,8 +134,8 @@ export const userSlice = createSlice({
                 state.isLoadingUserById = true
             })
             .addCase(getUserById.fulfilled, (state, action) => {
-                state.detailUser = action.payload.data
                 state.isLoadingUserById = false
+                state.detailUser = action.payload?.data
             })
             .addCase(getUserById.rejected, (state, action) => {
                 state.isLoadingUserById = false

@@ -4,8 +4,8 @@ import {
 } from "react-router-dom";
 
 import Home from "../components/Home/Home";
-import Login from '../components/Login/Login'
-import Register from '../components/Register/Register'
+import Login from '../components/Auth/Login'
+import Register from '../components/Auth/Register'
 import User from '../components/ManageUser/User'
 import Car from "../components/Car/Car";
 import Payment from "../components/Payment/Payment";
@@ -23,7 +23,7 @@ const AppRoutes = () => {
                 <PrivateRoute path="/payment" component={Payment} />
 
                 <PrivateRoute path="/user" exact component={User} />
-                <PrivateRoute path="/user/detail/:id" component={DetailUser} />
+                <PrivateRoute path="/user/detail" component={DetailUser} />
 
                 <Route path="/" exact>
                     <Home />

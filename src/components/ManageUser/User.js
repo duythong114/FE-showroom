@@ -8,8 +8,8 @@ import { useHistory } from "react-router-dom";
 const User = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
+    const isAuthenticated = useSelector(state => state.user.isAuthenticated)
     const listUsers = useSelector(state => state.user.listUsers)
-    const isLoggedIn = useSelector(state => state.user.isLoggedIn)
     const totalPages = useSelector(state => state.user.totalPages)
 
     const [page, setPage] = useState(1)
@@ -17,7 +17,7 @@ const User = (props) => {
     const [limit, setLimit] = useState(2)
 
     useEffect(() => {
-        if (isLoggedIn === true) {
+        if (isAuthenticated) {
             let pagination = { page, limit }
             dispatch(fetchAllUsers(pagination))
         }
@@ -30,7 +30,7 @@ const User = (props) => {
     }
 
     const handleDetailBtn = (data) => {
-        history.push(`/user/detail/${data.id}`)
+        history.push(`/user/detail?id=${data.id}`)
     }
 
     return (
@@ -71,7 +71,6 @@ const User = (props) => {
                                 </tr>
                             ))
                         }
-
                     </tbody>
                 </table>
 
