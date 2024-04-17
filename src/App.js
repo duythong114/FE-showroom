@@ -9,22 +9,25 @@ import {
 } from "react-router-dom";
 import { getUserRefresh } from './slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner"
+import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 
 function App() {
-  let dispatch = useDispatch()
-  let isRefreshingUser = useSelector(state => state.user.isRefreshingUser)
-  let user = useSelector(state => state.user.user)
+  const dispatch = useDispatch()
+  const isRefreshingUser = useSelector(state => state.user.isRefreshingUser)
+  const isRemoving = useSelector(state => state.user.isRemoving)
+  const user = useSelector(state => state.user.user)
   // let isAuthenticated = useSelector(state => state.user.isAuthenticated)
 
   useEffect(() => {
-    if (!user) {
+    if (!user
+      && window.location.href !== "http://localhost:3000/login"
+      && window.location.href !== "http://localhost:3000/register") {
       dispatch(getUserRefresh())
     }
     // eslint-disable-next-line
   }, [])
 
-  if (isRefreshingUser) {
+  if (isRefreshingUser || isRemoving) {
     return (
       <LoadingSpinner />
     )

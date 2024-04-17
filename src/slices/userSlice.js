@@ -5,6 +5,7 @@ import {
     loginUserService,
     getUserByIdService,
     getUserRefreshService,
+    logoutUserService,
 } from '../services'
 
 export const loginUser = createAsyncThunk(
@@ -15,6 +16,18 @@ export const loginUser = createAsyncThunk(
             return response
         } catch (error) {
             return rejectWithValue(error);
+        }
+    },
+)
+
+export const logoutUser = createAsyncThunk(
+    'user/logoutUser',
+    async () => {
+        try {
+            const response = await logoutUserService()
+            return response
+        } catch (error) {
+            return error;
         }
     },
 )
@@ -76,6 +89,9 @@ const initialState = {
     isLogging: false,
     user: null,
 
+    // logout state
+    isRemoving: false,
+
     // register state
     isRegistering: false,
 
@@ -113,6 +129,21 @@ export const userSlice = createSlice({
             .addCase(loginUser.rejected, (state, action) => {
                 state.isLogging = false
                 state.isAuthenticated = false
+                state.isError = action.payload.message
+            })
+
+        // logout user
+        builder
+            .addCase(logoutUser.pending, (state, action) => {
+                state.isRemoving = true
+            })
+            .addCase(logoutUser.fulfilled, (state, action) => {
+                state.isRemoving = false
+                state.isAuthenticated = false
+                state.user = initialState.user
+            })
+            .addCase(logoutUser.rejected, (state, action) => {
+                state.isRemoving = false
                 state.isError = action.payload.message
             })
 
@@ -164,9 +195,9 @@ export const userSlice = createSlice({
                 state.isRefreshingUser = true
             })
             .addCase(getUserRefresh.fulfilled, (state, action) => {
-                state.isAuthenticated = true
                 state.isRefreshingUser = false
-                state.user = action.payload?.data
+                state.isAuthenticated = action.payload?.data?.isAuthenticated || initialState.isAuthenticated
+                state.user = action.payload?.data?.user || initialState.user
             })
             .addCase(getUserRefresh.rejected, (state, action) => {
                 state.isAuthenticated = false

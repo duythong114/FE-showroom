@@ -1,12 +1,25 @@
 import React from 'react';
 import './Nav.scss';
 import { NavLink, useLocation } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../slices/userSlice'
+import { toast } from 'react-toastify';
+import { useHistory } from "react-router-dom";
 
 const Nav = (props) => {
     const isAuthenticated = useSelector(state => state.user.isAuthenticated)
     const user = useSelector(state => state.user.user)
     const location = useLocation()
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    const handleLogOutBtn = async () => {
+        let response = await dispatch(logoutUser())
+        if (response?.payload?.errorCode === 0) {
+            toast.success(response.payload.errorMessage)
+            history.push('/')
+        }
+    }
 
     return (
         <div>
@@ -27,6 +40,13 @@ const Nav = (props) => {
                                 <h3 className='user-role'>{user && user.Group && user.Group.name}:</h3>
                                 <h3 className='user-name'>{user && user.firstName}</h3>
                             </div>
+
+                            <button
+                                onClick={() => handleLogOutBtn()}
+                                className='btn btn-primary btn-customized'
+                            >
+                                <i className="fa-solid fa-right-from-bracket"></i>
+                            </button>
                         </>
                         :
                         <>

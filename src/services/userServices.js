@@ -8,6 +8,10 @@ const loginUserService = (userData) => {
     })
 }
 
+const logoutUserService = () => {
+    return axios.get('/api/user/logout-user')
+}
+
 const registerNewUserService = (userData) => {
     return axios.post('/api/user/register', {
         email: userData.email,
@@ -35,6 +39,7 @@ const getUserRefreshService = () => {
 
 export {
     loginUserService,
+    logoutUserService,
     registerNewUserService,
     getAllUsersService,
     getUserByIdService,
