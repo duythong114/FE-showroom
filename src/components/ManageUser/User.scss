@@ -41,6 +41,13 @@
                 background-color: #04AA6D;
                 color           : white;
             }
+
+            td {
+                .table-notify {
+                    text-align: center;
+                    color     : red;
+                }
+            }
         }
     }
 }

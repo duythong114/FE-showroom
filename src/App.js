@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import { getUserRefresh } from './slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import PacmanLoader from "react-spinners/PacmanLoader";
+import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner"
 
 function App() {
   let dispatch = useDispatch()
@@ -26,13 +26,7 @@ function App() {
 
   if (isRefreshingUser) {
     return (
-      <div className='spiner-container'>
-        < PacmanLoader
-          size={80}
-          loading={true}
-          color="#36d7b7" />
-        <h1 className='spiner-text mt-3'>Data is loading...</h1>
-      </div >
+      <LoadingSpinner />
     )
   } else {
     return (
