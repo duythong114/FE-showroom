@@ -189,7 +189,7 @@ export const userSlice = createSlice({
                 state.isError = action.payload.message
             })
 
-        // fetch user when refresh
+        // refresh user when reload
         builder
             .addCase(getUserRefresh.pending, (state, action) => {
                 state.isRefreshingUser = true

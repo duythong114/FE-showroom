@@ -16,12 +16,9 @@ function App() {
   const isRefreshingUser = useSelector(state => state.user.isRefreshingUser)
   const isRemoving = useSelector(state => state.user.isRemoving)
   const user = useSelector(state => state.user.user)
-  // let isAuthenticated = useSelector(state => state.user.isAuthenticated)
 
   useEffect(() => {
-    if (!user
-      && window.location.href !== "http://localhost:3000/login"
-      && window.location.href !== "http://localhost:3000/register") {
+    if (!user) {
       dispatch(getUserRefresh())
     }
     // eslint-disable-next-line
