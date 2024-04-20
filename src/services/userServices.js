@@ -37,6 +37,10 @@ const getUserRefreshService = () => {
     return axios.get('/api/user/get-user-refresh')
 }
 
+const deleteUserService = (userId) => {
+    return axios.get(`/api/user/delete-user?userId=${userId}`)
+}
+
 export {
     loginUserService,
     logoutUserService,
@@ -44,4 +48,5 @@ export {
     getAllUsersService,
     getUserByIdService,
     getUserRefreshService,
+    deleteUserService,
 }

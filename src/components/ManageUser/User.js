@@ -5,17 +5,23 @@ import { fetchAllUsers } from '../../slices/userSlice';
 import ReactPaginate from 'react-paginate';
 import { useHistory } from "react-router-dom";
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import { deleteUser } from '../../slices/userSlice'
+import { toast } from 'react-toastify';
+import ModalDelete from './ModalDelete';
 
 const User = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
     const isLoadingAllUsers = useSelector(state => state.user.isLoadingAllUsers)
+    const isDeletingUser = useSelector(state => state.user.isDeletingUser)
     const listUsers = useSelector(state => state.user.listUsers)
     const totalPages = useSelector(state => state.user.totalPages)
 
     const [page, setPage] = useState(1)
     // eslint-disable-next-line
     const [limit, setLimit] = useState(2)
+    const [showModalDelete, setShowModalDelete] = useState(false)
+    const [dataModal, setDataModal] = useState({})
 
     useEffect(() => {
         let pagination = { page, limit }
@@ -32,6 +38,38 @@ const User = (props) => {
         history.push(`/user/detail?id=${data.id}`)
     }
 
+    const handleDeleteBtn = (user) => {
+        setDataModal(user)
+        setShowModalDelete(true)
+    }
+
+    const handleCloseModalBTn = () => {
+        setDataModal({})
+        setShowModalDelete(false);
+    }
+
+    const handleDeleteUser = async () => {
+        let userId = dataModal.id
+        console.log("check userId", userId)
+        let response = await dispatch(deleteUser(userId))
+        console.log("check response: ", response)
+        if (response
+            && response.payload
+            && response.payload.response
+            && response.payload.response.data
+            && response.payload.response.data.errorCode !== 0
+        ) {
+            toast.error(response.payload.response.data.errorMessage)
+        }
+
+        if (response && response.payload && response.payload.errorCode === 0) {
+            let pagination = { page, limit }
+            await dispatch(fetchAllUsers(pagination))
+            toast.success(response.payload.errorMessage)
+            setShowModalDelete(false)
+        }
+    }
+
     return (
         <div className='users-container' >
             <div className="container">
@@ -46,7 +84,7 @@ const User = (props) => {
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
-                    {isLoadingAllUsers ?
+                    {(isLoadingAllUsers || isDeletingUser) ?
                         <tbody>
                             <tr>
                                 <td colSpan={6}><LoadingSpinner /></td>
@@ -65,7 +103,11 @@ const User = (props) => {
                                         <td>
                                             <div className='action-container'>
                                                 <button className='btn btn-warning'>Edit</button>
-                                                <button className='btn btn-danger'>Delete</button>
+                                                <button
+                                                    onClick={() => handleDeleteBtn(item)}
+                                                    className='btn btn-danger'>
+                                                    Delete
+                                                </button>
                                                 <button
                                                     className='btn btn-success'
                                                     onClick={() => handleDetailBtn(item)}
@@ -79,14 +121,12 @@ const User = (props) => {
                                 :
                                 <tr>
                                     <td colSpan={6}>
-                                        <h3 className='table-notify'>You don't have permission with this page</h3>
+                                        {/* <h3 className='table-notify'>You don't have permission with this page</h3> */}
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     }
-
-
                 </table>
 
                 {totalPages && totalPages > 0 &&
@@ -112,6 +152,13 @@ const User = (props) => {
                     />
                 }
             </div>
+
+            <ModalDelete
+                handleDeleteUser={handleDeleteUser}
+                handleClose={handleCloseModalBTn}
+                show={showModalDelete}
+                dataModal={dataModal}
+            />
         </div>
     )
 }
