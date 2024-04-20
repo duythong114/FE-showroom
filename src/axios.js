@@ -1,9 +1,21 @@
 import axios from 'axios';
+import axiosRetry from 'axios-retry';
 import { toast } from 'react-toastify';
 
 const instance = axios.create({
     baseURL: 'http://localhost:8080'
 });
+
+axiosRetry(instance, {
+    retries: 3,
+    retryCondition: (error) => {
+        return error.response.status === 401
+    },
+    shouldResetTimeout: true,
+    retryDelay: (retryCount, error) => {
+        return retryCount * 1000
+    }
+})
 
 // allow set cookies from server
 instance.defaults.withCredentials = true;

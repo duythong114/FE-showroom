@@ -196,8 +196,8 @@ export const userSlice = createSlice({
             })
             .addCase(getUserRefresh.fulfilled, (state, action) => {
                 state.isRefreshingUser = false
-                state.isAuthenticated = action.payload?.data?.isAuthenticated || initialState.isAuthenticated
-                state.user = action.payload?.data?.user || initialState.user
+                state.isAuthenticated = action.payload?.data?.isAuthenticated
+                state.user = action.payload?.data?.user
             })
             .addCase(getUserRefresh.rejected, (state, action) => {
                 state.isAuthenticated = false

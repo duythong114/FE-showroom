@@ -32,25 +32,27 @@ const User = (props) => {
         history.push(`/user/detail?id=${data.id}`)
     }
 
-    if (isLoadingAllUsers) {
-        return (
-            <LoadingSpinner />
-        )
-    } else {
-        return (
-            <div className='users-container' >
-                <div className="container">
-                    <table className="table table-hover customers mt-3">
-                        <thead>
+    return (
+        <div className='users-container' >
+            <div className="container">
+                <table className="table table-hover customers mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">FirstName</th>
+                            <th scope="col">LastName</th>
+                            <th scope="col">Group</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    {isLoadingAllUsers ?
+                        <tbody>
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">FirstName</th>
-                                <th scope="col">LastName</th>
-                                <th scope="col">Group</th>
-                                <th scope="col">Actions</th>
+                                <td colSpan={6}><LoadingSpinner /></td>
                             </tr>
-                        </thead>
+                        </tbody>
+                        :
                         <tbody>
                             {listUsers && listUsers.length > 0 ?
                                 listUsers.map((item, index) => (
@@ -82,34 +84,36 @@ const User = (props) => {
                                 </tr>
                             }
                         </tbody>
-                    </table>
-
-                    {totalPages && totalPages > 0 &&
-                        <ReactPaginate
-                            nextLabel="next >"
-                            onPageChange={handlePageClick}
-                            pageRangeDisplayed={2}
-                            marginPagesDisplayed={2}
-                            pageCount={totalPages}
-                            previousLabel="< previous"
-                            pageClassName="page-item"
-                            pageLinkClassName="page-link"
-                            previousClassName="page-item"
-                            previousLinkClassName="page-link"
-                            nextClassName="page-item"
-                            nextLinkClassName="page-link"
-                            breakLabel="..."
-                            breakClassName="page-item"
-                            breakLinkClassName="page-link"
-                            containerClassName="pagination"
-                            activeClassName="active"
-                            renderOnZeroPageCount={null}
-                        />
                     }
-                </div>
+
+
+                </table>
+
+                {totalPages && totalPages > 0 &&
+                    <ReactPaginate
+                        nextLabel="next >"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={2}
+                        marginPagesDisplayed={2}
+                        pageCount={totalPages}
+                        previousLabel="< previous"
+                        pageClassName="page-item"
+                        pageLinkClassName="page-link"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        containerClassName="pagination"
+                        activeClassName="active"
+                        renderOnZeroPageCount={null}
+                    />
+                }
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default User;

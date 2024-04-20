@@ -22,7 +22,7 @@ function App() {
       dispatch(getUserRefresh())
     }
     // eslint-disable-next-line
-  }, [])
+  }, [user])
 
   if (isRefreshingUser || isRemoving) {
     return (
