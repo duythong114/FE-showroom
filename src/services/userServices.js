@@ -41,6 +41,18 @@ const deleteUserService = (userId) => {
     return axios.get(`/api/user/delete-user?userId=${userId}`)
 }
 
+const updateUserService = (userData) => {
+    return axios.post('/api//user/update-user', {
+        id: userData.id,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        address: userData.address,
+        phoneNumber: userData.phoneNumber,
+        gender: userData.gender,
+        groupId: userData.groupId
+    })
+}
+
 export {
     loginUserService,
     logoutUserService,
@@ -49,4 +61,5 @@ export {
     getUserByIdService,
     getUserRefreshService,
     deleteUserService,
+    updateUserService,
 }

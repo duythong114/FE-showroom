@@ -7,6 +7,7 @@ import {
     getUserRefreshService,
     logoutUserService,
     deleteUserService,
+    updateUserService,
 } from '../services'
 
 export const loginUser = createAsyncThunk(
@@ -93,6 +94,18 @@ export const deleteUser = createAsyncThunk(
     },
 )
 
+export const updateUser = createAsyncThunk(
+    'user/updateUser',
+    async (userData) => {
+        try {
+            const response = await updateUserService(userData)
+            return response
+        } catch (error) {
+            return error;
+        }
+    },
+)
+
 const initialState = {
     // common state
     isError: null,
@@ -122,6 +135,9 @@ const initialState = {
 
     // delete user
     isDeletingUser: false,
+
+    // update user
+    isUpdatingUser: false,
 }
 
 export const userSlice = createSlice({
@@ -231,6 +247,19 @@ export const userSlice = createSlice({
             })
             .addCase(deleteUser.rejected, (state, action) => {
                 state.isDeletingUser = false
+                state.isError = action.payload.message
+            })
+
+        // delete user 
+        builder
+            .addCase(updateUser.pending, (state, action) => {
+                state.isUpdatingUser = true
+            })
+            .addCase(updateUser.fulfilled, (state, action) => {
+                state.isUpdatingUser = false
+            })
+            .addCase(updateUser.rejected, (state, action) => {
+                state.isUpdatingUser = false
                 state.isError = action.payload.message
             })
     },

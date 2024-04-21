@@ -7,21 +7,30 @@ import { useHistory } from "react-router-dom";
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import { deleteUser } from '../../slices/userSlice'
 import { toast } from 'react-toastify';
-import ModalDelete from './ModalDelete';
+import ModalDeleteUser from './ModalDeleteUser';
+import ModalUpdateUser from './ModalUpdateUser';
 
 const User = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const isLoadingAllUsers = useSelector(state => state.user.isLoadingAllUsers)
-    const isDeletingUser = useSelector(state => state.user.isDeletingUser)
-    const listUsers = useSelector(state => state.user.listUsers)
-    const totalPages = useSelector(state => state.user.totalPages)
 
+    // pagination
+    const totalPages = useSelector(state => state.user.totalPages)
+    const listUsers = useSelector(state => state.user.listUsers)
+    const isLoadingAllUsers = useSelector(state => state.user.isLoadingAllUsers)
     const [page, setPage] = useState(1)
     // eslint-disable-next-line
     const [limit, setLimit] = useState(2)
+
+    // delete modal
+    const isDeletingUser = useSelector(state => state.user.isDeletingUser)
     const [showModalDelete, setShowModalDelete] = useState(false)
-    const [dataModal, setDataModal] = useState({})
+    const [dataModalDelete, setDataModal] = useState({})
+
+    // update modal
+    const isUpdatingUser = useSelector(state => state.user.isUpdatingUser)
+    const [showModalUpdate, setShowModalUpdate] = useState(false)
+    const [dataModalUpdate, setDataModalUpdate] = useState({})
 
     useEffect(() => {
         let pagination = { page, limit }
@@ -43,16 +52,14 @@ const User = (props) => {
         setShowModalDelete(true)
     }
 
-    const handleCloseModalBTn = () => {
+    const handleCloseDeleteModal = () => {
         setDataModal({})
         setShowModalDelete(false);
     }
 
     const handleDeleteUser = async () => {
-        let userId = dataModal.id
-        console.log("check userId", userId)
+        let userId = dataModalDelete.id
         let response = await dispatch(deleteUser(userId))
-        console.log("check response: ", response)
         if (response
             && response.payload
             && response.payload.response
@@ -70,6 +77,16 @@ const User = (props) => {
         }
     }
 
+    const handleUpdateBtn = (user) => {
+        setShowModalUpdate(true)
+        setDataModalUpdate(user)
+    }
+
+    const handleCloseUpdateModal = () => {
+        setShowModalUpdate(false)
+        setDataModalUpdate({})
+    }
+
     return (
         <div className='users-container' >
             <div className="container">
@@ -84,7 +101,7 @@ const User = (props) => {
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
-                    {(isLoadingAllUsers || isDeletingUser) ?
+                    {(isLoadingAllUsers || isDeletingUser || isUpdatingUser) ?
                         <tbody>
                             <tr>
                                 <td colSpan={6}><LoadingSpinner /></td>
@@ -102,7 +119,12 @@ const User = (props) => {
                                         <td>{item.Group.name}</td>
                                         <td>
                                             <div className='action-container'>
-                                                <button className='btn btn-warning'>Edit</button>
+                                                <button
+                                                    onClick={() => handleUpdateBtn(item)}
+                                                    className='btn btn-warning'
+                                                >
+                                                    Edit
+                                                </button>
                                                 <button
                                                     onClick={() => handleDeleteBtn(item)}
                                                     className='btn btn-danger'>
@@ -153,11 +175,19 @@ const User = (props) => {
                 }
             </div>
 
-            <ModalDelete
-                handleDeleteUser={handleDeleteUser}
-                handleClose={handleCloseModalBTn}
+            <ModalDeleteUser
                 show={showModalDelete}
-                dataModal={dataModal}
+                handleClose={handleCloseDeleteModal}
+                dataModalDelete={dataModalDelete}
+                handleDeleteUser={handleDeleteUser}
+            />
+
+            <ModalUpdateUser
+                updateShow={showModalUpdate}
+                handleUpdateClose={handleCloseUpdateModal}
+                dataModalUpdate={dataModalUpdate}
+                page={page}
+                limit={limit}
             />
         </div>
     )
