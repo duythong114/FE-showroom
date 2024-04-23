@@ -38,11 +38,15 @@ const getUserRefreshService = () => {
 }
 
 const deleteUserService = (userId) => {
-    return axios.get(`/api/user/delete-user?userId=${userId}`)
+    return axios.delete(`/api/user/delete-user`, {
+        data: {
+            userId: userId
+        }
+    })
 }
 
 const updateUserService = (userData) => {
-    return axios.post('/api//user/update-user', {
+    return axios.put('/api//user/update-user', {
         id: userData.id,
         firstName: userData.firstName,
         lastName: userData.lastName,
