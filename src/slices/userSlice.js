@@ -8,7 +8,7 @@ import {
     logoutUserService,
     deleteUserService,
     updateUserService,
-} from '../services'
+} from '../services/userServices'
 
 export const loginUser = createAsyncThunk(
     'user/loginUser',
