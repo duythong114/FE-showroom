@@ -128,6 +128,18 @@ export const carSlice = createSlice({
                 state.isLoadingAllCars = false
                 state.isError = action.payload.message
             })
+
+            // create a new car
+            .addCase(creatNewCar.pending, (state, action) => {
+                state.isCreatingCar = true
+            })
+            .addCase(creatNewCar.fulfilled, (state, action) => {
+                state.isCreatingCar = false
+            })
+            .addCase(creatNewCar.rejected, (state, action) => {
+                state.isCreatingCar = false
+                state.isError = action.payload.message
+            })
     },
 })
 

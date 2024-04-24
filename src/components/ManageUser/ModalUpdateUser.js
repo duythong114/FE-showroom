@@ -26,7 +26,6 @@ const ModalUpdateUser = (props) => {
 
     useEffect(() => {
         if (dataModalUpdate) {
-            console.log("check dataModalUpdate", props.dataModalUpdate)
             setUser(dataModalUpdate ? dataModalUpdate : user)
         }
         // eslint-disable-next-line
