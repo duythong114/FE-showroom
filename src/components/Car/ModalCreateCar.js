@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getAllCars } from '../../slices/carSlice'
 
-const ModalUpdateUser = (props) => {
+const ModalCreateCar = (props) => {
 
     const page = props.page
     const limit = props.limit
@@ -36,8 +36,8 @@ const ModalUpdateUser = (props) => {
         let isInputValid = validateInput()
 
         if (isInputValid) {
-            let user = { name, model, description, image }
-            let response = await dispatch(creatNewCar(user))
+            let car = { name, model, description, image }
+            let response = await dispatch(creatNewCar(car))
 
             if (response
                 && response.payload
@@ -126,4 +126,4 @@ const ModalUpdateUser = (props) => {
     )
 }
 
-export default ModalUpdateUser;
+export default ModalCreateCar;

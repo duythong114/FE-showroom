@@ -140,6 +140,18 @@ export const carSlice = createSlice({
                 state.isCreatingCar = false
                 state.isError = action.payload.message
             })
+
+            // delete car
+            .addCase(deleteCar.pending, (state, action) => {
+                state.isDeletingCar = true
+            })
+            .addCase(deleteCar.fulfilled, (state, action) => {
+                state.isDeletingCar = false
+            })
+            .addCase(deleteCar.rejected, (state, action) => {
+                state.isDeletingCar = false
+                state.isError = action.payload.message
+            })
     },
 })
 

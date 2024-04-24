@@ -5,6 +5,9 @@ import ReactPaginate from 'react-paginate';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import { getAllCars } from '../../slices/carSlice'
 import ModalCreateCar from './ModalCreateCar'
+import { deleteCar } from '../../slices/carSlice'
+import ModalDeleteCar from './ModalDeleteCar';
+import { toast } from 'react-toastify';
 
 const Car = (props) => {
     const dispatch = useDispatch();
@@ -20,6 +23,10 @@ const Car = (props) => {
     // create new car
     const [createModalShow, setCreateModalShow] = useState(false)
     const isCreatingCar = useSelector(state => state.car.isCreatingCar)
+
+    // delete car
+    const [deleteModalShow, setDeleteModalShow] = useState(false)
+    const [dataDeleteModal, setDataDeleteModal] = useState({})
 
     useEffect(() => {
         let pagination = { page, limit }
@@ -38,6 +45,38 @@ const Car = (props) => {
 
     const handleCreateCarClose = () => {
         setCreateModalShow(false)
+    }
+
+    const handleDeleteCarBtn = (data) => {
+        setDataDeleteModal(data)
+        setDeleteModalShow(true)
+    }
+
+    const handleDeleteCarClose = () => {
+        setDataDeleteModal({})
+        setDeleteModalShow(false)
+    }
+
+    const handleDeleteCar = async () => {
+        let carId = dataDeleteModal?.id
+        if (carId) {
+            let response = await dispatch(deleteCar(carId))
+            if (response
+                && response.payload
+                && response.payload.response
+                && response.payload.response.data
+                && response.payload.response.data.errorCode !== 0
+            ) {
+                toast.error(response.payload.response.data.errorMessage)
+            }
+
+            if (response && response.payload && response.payload.errorCode === 0) {
+                toast.success(response.payload.errorMessage)
+                setDeleteModalShow(false)
+                let pagination = { page, limit }
+                dispatch(getAllCars(pagination))
+            }
+        }
     }
 
     return (
@@ -85,7 +124,7 @@ const Car = (props) => {
                                                     Edit
                                                 </button>
                                                 <button
-                                                    // onClick={() => handleDeleteBtn(item)}
+                                                    onClick={() => handleDeleteCarBtn(item)}
                                                     className='btn btn-danger'>
                                                     Delete
                                                 </button>
@@ -134,6 +173,13 @@ const Car = (props) => {
                     createCarClose={handleCreateCarClose}
                     page={page}
                     limit={limit}
+                />
+
+                <ModalDeleteCar
+                    deleteCarShow={deleteModalShow}
+                    deleteCarClose={handleDeleteCarClose}
+                    dataDeleteModal={dataDeleteModal}
+                    handleDeleteCar={handleDeleteCar}
                 />
             </div>
         </div >
