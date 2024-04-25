@@ -26,7 +26,7 @@ const ModalUpdateUser = (props) => {
 
     useEffect(() => {
         if (dataModalUpdate) {
-            setUser(dataModalUpdate ? dataModalUpdate : user)
+            setUser(dataModalUpdate)
         }
         // eslint-disable-next-line
     }, [dataModalUpdate])
@@ -39,7 +39,6 @@ const ModalUpdateUser = (props) => {
 
     const handleUpdateUser = async () => {
         let response = await dispatch(updateUser(user))
-        console.log("check response", response)
 
         if (response
             && response.payload

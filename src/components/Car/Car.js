@@ -8,6 +8,7 @@ import ModalCreateCar from './ModalCreateCar'
 import { deleteCar } from '../../slices/carSlice'
 import ModalDeleteCar from './ModalDeleteCar';
 import { toast } from 'react-toastify';
+import ModalUpdateCar from './ModalUpdateCar';
 
 const Car = (props) => {
     const dispatch = useDispatch();
@@ -27,6 +28,12 @@ const Car = (props) => {
     // delete car
     const [deleteModalShow, setDeleteModalShow] = useState(false)
     const [dataDeleteModal, setDataDeleteModal] = useState({})
+    const isDeletingCar = useSelector(state => state.car.isDeletingCar)
+
+    // update car
+    const [updateModalShow, setUpdateModalShow] = useState(false)
+    const [dataUpdateModal, setDataUpdateModal] = useState({})
+    const isUpdatingCar = useSelector(state => state.car.isUpdatingCar)
 
     useEffect(() => {
         let pagination = { page, limit }
@@ -79,6 +86,16 @@ const Car = (props) => {
         }
     }
 
+    const handleUpdateCarBtn = (data) => {
+        setUpdateModalShow(true)
+        setDataUpdateModal(data)
+    }
+
+    const handleUpdateCarClose = () => {
+        setUpdateModalShow(false)
+        setDataUpdateModal({})
+    }
+
     return (
         <div className='car-container'>
             <div className='container'>
@@ -100,7 +117,7 @@ const Car = (props) => {
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
-                    {(isLoadingAllCars || isCreatingCar) ?
+                    {(isLoadingAllCars || isCreatingCar || isDeletingCar || isUpdatingCar) ?
                         <tbody>
                             <tr>
                                 <td colSpan={6}><LoadingSpinner /></td>
@@ -118,7 +135,7 @@ const Car = (props) => {
                                         <td>
                                             <div className='action-container'>
                                                 <button
-                                                    // onClick={() => handleUpdateBtn(item)}
+                                                    onClick={() => handleUpdateCarBtn(item)}
                                                     className='btn btn-warning'
                                                 >
                                                     Edit
@@ -180,6 +197,14 @@ const Car = (props) => {
                     deleteCarClose={handleDeleteCarClose}
                     dataDeleteModal={dataDeleteModal}
                     handleDeleteCar={handleDeleteCar}
+                />
+
+                <ModalUpdateCar
+                    updateCarShow={updateModalShow}
+                    updateCarClose={handleUpdateCarClose}
+                    dataUpdateModal={dataUpdateModal}
+                    page={page}
+                    limit={limit}
                 />
             </div>
         </div >
