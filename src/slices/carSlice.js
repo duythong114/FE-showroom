@@ -4,7 +4,9 @@ import {
     createNewCarService,
     deleteCarService,
     updateCarService,
-    getCarsByModelService,
+    getBmwCarService,
+    getFerrariCarService,
+    getLamborghiniCarService,
     getCarByIdService,
 } from '../services/carServices'
 
@@ -56,11 +58,35 @@ export const updateCar = createAsyncThunk(
     },
 )
 
-export const getCarsByModel = createAsyncThunk(
-    'car/getCarsByModel',
-    async (model) => {
+export const getBmwCar = createAsyncThunk(
+    'car/getBmwCar',
+    async () => {
         try {
-            const response = await getCarsByModelService(model)
+            const response = await getBmwCarService()
+            return response
+        } catch (error) {
+            return error;
+        }
+    },
+)
+
+export const getFerrariCar = createAsyncThunk(
+    'car/getFerrariCar',
+    async () => {
+        try {
+            const response = await getFerrariCarService()
+            return response
+        } catch (error) {
+            return error;
+        }
+    },
+)
+
+export const getLamborghiniCar = createAsyncThunk(
+    'car/getLamborghiniCar',
+    async () => {
+        try {
+            const response = await getLamborghiniCarService()
             return response
         } catch (error) {
             return error;
@@ -98,9 +124,17 @@ const initialState = {
     // update car
     isUpdatingCar: false,
 
-    // get cars by model
-    isLoadingCarsByModel: false,
-    CarListByModel: null,
+    // get bmw car
+    isLoadingBmwCar: false,
+    bmwCarList: [],
+
+    // get ferrari car
+    isLoadingFerrariCar: false,
+    ferrariCarList: [],
+
+    // get lamborghini car
+    isLoadingLamborghiniCar: false,
+    lamborghiniCarList: [],
 
     // get car by id
     isLoadingCarById: false,
@@ -162,6 +196,46 @@ export const carSlice = createSlice({
             })
             .addCase(updateCar.rejected, (state, action) => {
                 state.isUpdatingCar = false
+                state.isError = action.payload.message
+            })
+
+            // get bmw car
+            .addCase(getBmwCar.pending, (state, action) => {
+                state.isLoadingBmwCar = true
+            })
+            .addCase(getBmwCar.fulfilled, (state, action) => {
+                state.isLoadingBmwCar = false
+                state.bmwCarList = action.payload?.data
+            })
+            .addCase(getBmwCar.rejected, (state, action) => {
+                state.isLoadingBmwCar = false
+                state.isError = action.payload.message
+            })
+
+            // get ferrari car
+            .addCase(getFerrariCar.pending, (state, action) => {
+                state.isLoadingFerrariCar = true
+            })
+            .addCase(getFerrariCar.fulfilled, (state, action) => {
+                state.isLoadingFerrariCar = false
+                state.ferrariCarList = action.payload?.data
+            })
+            .addCase(getFerrariCar.rejected, (state, action) => {
+                state.isLoadingFerrariCar = false
+                state.isError = action.payload.message
+            })
+
+            // get lamborghini car
+            .addCase(getLamborghiniCar.pending, (state, action) => {
+                state.isLoadingLamborghiniCar = true
+            })
+            .addCase(getLamborghiniCar.fulfilled, (state, action) => {
+                state.isLoadingLamborghiniCar = false
+                console.log("check payload from slice: ", action.payload)
+                state.lamborghiniCarList = action.payload?.data
+            })
+            .addCase(getLamborghiniCar.rejected, (state, action) => {
+                state.isLoadingLamborghiniCar = false
                 state.isError = action.payload.message
             })
     },

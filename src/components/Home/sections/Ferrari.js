@@ -1,7 +1,18 @@
 import './Ferrari.scss'
 import Slider from "react-slick";
+import React, { useEffect } from 'react';
+import { getFerrariCar } from '../../../slices/carSlice'
+import { useDispatch, useSelector } from 'react-redux';
 
 const Ferrari = (props) => {
+    const dispatch = useDispatch()
+    const ferrariCarList = useSelector(state => state.car.ferrariCarList)
+
+    useEffect(() => {
+        dispatch(getFerrariCar())
+        // eslint-disable-next-line
+    }, [])
+
     return (
         <div className='ferrari-section-container'>
             <div className='section-container'>
@@ -11,42 +22,19 @@ const Ferrari = (props) => {
                 </div>
                 <div className='section-body'>
                     <Slider {...props.settings}>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background ferrari-img'></div>
-                                <div className='img-content'>FERRARI 1</div>
-                            </div>
-                        </div>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background ferrari-img'></div>
-                                <div className='img-content'>FERRARI 2</div>
-                            </div>
-                        </div>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background ferrari-img'></div>
-                                <div className='img-content'>FERRARI 3</div>
-                            </div>
-                        </div>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background ferrari-img'></div>
-                                <div className='img-content'>FERRARI 4</div>
-                            </div>
-                        </div>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background ferrari-img'></div>
-                                <div className='img-content'>FERRARI 5</div>
-                            </div>
-                        </div>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background ferrari-img'></div>
-                                <div className='img-content'>FERRARI 6</div>
-                            </div>
-                        </div>
+                        {ferrariCarList && ferrariCarList.length > 0 &&
+                            ferrariCarList.map((item, index) => (
+                                <div className='img-container px-3' key={`bmw-${index}`}>
+                                    <div className='img-customize'>
+                                        <div
+                                            style={{ backgroundImage: `url(${item.image})` }}
+                                            className='img-background'>
+                                        </div>
+                                        <div className='img-content'>{item.name}</div>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </Slider>
                 </div>
             </div>

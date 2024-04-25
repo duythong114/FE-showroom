@@ -1,8 +1,18 @@
 import './BMW.scss'
 import Slider from "react-slick";
-import React from 'react';
+import React, { useEffect } from 'react';
+import { getBmwCar } from '../../../slices/carSlice'
+import { useDispatch, useSelector } from 'react-redux';
 
 const BMW = (props) => {
+    const dispatch = useDispatch()
+    const bmwCarList = useSelector(state => state.car.bmwCarList)
+
+    useEffect(() => {
+        dispatch(getBmwCar())
+        // eslint-disable-next-line
+    }, [])
+
     return (
         <div className='BMW-section-container'>
             <div className='section-container'>
@@ -12,42 +22,19 @@ const BMW = (props) => {
                 </div>
                 <div className='section-body'>
                     <Slider {...props.settings}>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background bmw-img'></div>
-                                <div className='img-content'>BMW 1</div>
-                            </div>
-                        </div>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background bmw-img'></div>
-                                <div className='img-content'>BMW 2</div>
-                            </div>
-                        </div>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background bmw-img'></div>
-                                <div className='img-content'>BMW 3</div>
-                            </div>
-                        </div>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background bmw-img'></div>
-                                <div className='img-content'>BMW 4</div>
-                            </div>
-                        </div>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background bmw-img'></div>
-                                <div className='img-content'>BMW 5</div>
-                            </div>
-                        </div>
-                        <div className='img-container px-3'>
-                            <div className='img-customize'>
-                                <div className='img-background bmw-img'></div>
-                                <div className='img-content'>BMW 6</div>
-                            </div>
-                        </div>
+                        {bmwCarList && bmwCarList.length > 0 &&
+                            bmwCarList.map((item, index) => (
+                                <div className='img-container px-3' key={`bmw-${index}`}>
+                                    <div className='img-customize'>
+                                        <div
+                                            style={{ backgroundImage: `url(${item.image})` }}
+                                            className='img-background'>
+                                        </div>
+                                        <div className='img-content'>{item.name}</div>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </Slider>
                 </div>
             </div>

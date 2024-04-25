@@ -32,8 +32,16 @@ const updateCarService = (data) => {
     })
 }
 
-const getCarsByModelService = (model) => {
-    return axios.get(`/api/car/get-cars-by-model?carModel=${model}`)
+const getBmwCarService = () => {
+    return axios.get('/api/car/get-bmw-car')
+}
+
+const getFerrariCarService = () => {
+    return axios.get('/api/car/get-ferrari-car')
+}
+
+const getLamborghiniCarService = () => {
+    return axios.get('/api/car/get-lamborghini-car')
 }
 
 const getCarByIdService = (carId) => {
@@ -45,6 +53,8 @@ export {
     createNewCarService,
     deleteCarService,
     updateCarService,
-    getCarsByModelService,
+    getBmwCarService,
+    getFerrariCarService,
+    getLamborghiniCarService,
     getCarByIdService,
 }
