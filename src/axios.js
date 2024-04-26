@@ -31,16 +31,17 @@ instance.interceptors.response.use(function (response) {
     let errorMessage = error?.response?.data?.errorMessage
 
     switch (status) {
-        case 400: {
-            // toast.error(errorMessage)
-            return Promise.reject(error);
-        }
+        // case 400: {
+        //     // toast.error(errorMessage)
+        //     break;
+        // }
         case 402: {
             toast.error(errorMessage)
-            return Promise.reject(error);
+            break;
         }
         default: {
-            return Promise.reject(error);
+            return
+            // return error
         }
     }
 });

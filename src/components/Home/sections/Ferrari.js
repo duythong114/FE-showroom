@@ -15,7 +15,7 @@ const Ferrari = (props) => {
 
     return (
         <div className='ferrari-section-container'>
-            <div className='section-container'>
+            <div className='section-container container mt-5'>
                 <div className='section-header'>
                     <span className='header-title'>FERRARI</span>
                     <button className='header-btn'><span>SEE MORE</span></button>

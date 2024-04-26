@@ -1,7 +1,7 @@
 .home-header-container {
     .home-header-banner {
         background-image   : url('../../assets/image/header-banner/header-banner.jpg');
-        height             : 500px;
+        height             : 400px;
         background-repeat  : no-repeat;
         background-size    : cover;
         background-position: center center;
@@ -12,7 +12,7 @@
 
         .content-up {
             background-image: linear-gradient(rgba(126, 126, 126, 0.25), rgba(255, 255, 255, 0.1));
-            height          : 65%;
+            height          : 60%;
             padding-top     : 15px;
 
             .title1,
@@ -54,11 +54,12 @@
         }
 
         .content-down {
-            background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1));
-            height          : 35%;
-            display         : flex;
-            align-items     : flex-end;
-            justify-content : center;
+            background-image      : linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1));
+            height                : 40%;
+            display               : flex;
+            align-items           : flex-end;
+            // align-items        : center;
+            justify-content       : center;
 
             .options {
                 text-align     : center;

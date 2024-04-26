@@ -2,13 +2,12 @@
     margin-top: 60px;
 
     .section-container {
-        margin        : 40px 150px;
         display       : flex;
         flex-direction: column;
 
         .section-header {
             height: 60px;
-            margin: 30px 1rem;
+            margin: 1rem;
 
             .header-title {
                 font-weight     : 600;
@@ -35,7 +34,7 @@
         }
 
         .section-body {
-            padding-bottom: 30px;
+            padding-bottom: 50px;
 
             // reset slick slider css
             .slick-disabled {

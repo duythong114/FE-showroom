@@ -234,7 +234,7 @@ export const userSlice = createSlice({
             .addCase(getUserRefresh.rejected, (state, action) => {
                 state.isAuthenticated = false
                 state.isRefreshingUser = false
-                state.isError = action.payload.message
+                // state.isError = action.payload.message
             })
 
         // delete user 

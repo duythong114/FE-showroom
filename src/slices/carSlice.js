@@ -231,7 +231,6 @@ export const carSlice = createSlice({
             })
             .addCase(getLamborghiniCar.fulfilled, (state, action) => {
                 state.isLoadingLamborghiniCar = false
-                console.log("check payload from slice: ", action.payload)
                 state.lamborghiniCarList = action.payload?.data
             })
             .addCase(getLamborghiniCar.rejected, (state, action) => {
