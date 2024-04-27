@@ -237,6 +237,19 @@ export const carSlice = createSlice({
                 state.isLoadingLamborghiniCar = false
                 state.isError = action.payload.message
             })
+
+            // get car by id
+            .addCase(getCarById.pending, (state, action) => {
+                state.isLoadingCarById = true
+            })
+            .addCase(getCarById.fulfilled, (state, action) => {
+                state.isLoadingCarById = false
+                state.detailCar = action.payload?.data
+            })
+            .addCase(getCarById.rejected, (state, action) => {
+                state.isLoadingCarById = false
+                state.isError = action.payload.message
+            })
     },
 })
 

@@ -96,6 +96,11 @@
                     flex-direction    : column;
                     align-items       : center;
                     justify-content   : space-around;
+                    cursor            : pointer;
+
+                    :hover {
+                        opacity: 0.8;
+                    }
 
                     .img-background {
                         width              : 100%;
@@ -103,18 +108,6 @@
                         background-position: center;
                         background-size    : contain;
                         background-repeat  : no-repeat;
-
-                        // &.bmw-img {
-                        //     background-image: url('../../assets/image/car/bmw/bmw1.jpg');
-                        // }
-
-                        // &.ferrari-img {
-                        //     background-image: url('../../assets/image/car/ferrari/ferrari1.jpg');
-                        // }
-
-                        // &.lamborghini-img {
-                        //     background-image: url('../../assets/image/car/lamborghini/lamborghini1.jpg');
-                        // }
                     }
 
                     .img-content {

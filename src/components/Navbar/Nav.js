@@ -31,7 +31,7 @@ const Nav = (props) => {
                         ?
                         <>
                             <NavLink to="/personal">Personal</NavLink>
-                            <NavLink to="/car">Car</NavLink>
+                            <NavLink to="/car" exact>Car</NavLink>
                             <NavLink to="/payment">Payment</NavLink>
                             <NavLink to="/user" exact>User</NavLink>
 

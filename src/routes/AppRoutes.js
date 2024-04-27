@@ -12,22 +12,23 @@ import Payment from "../components/Payment/Payment";
 import Personal from "../components/Personal/Personal";
 import DetailUser from "../components/ManageUser/DetailUser";
 import PrivateRoute from "./PrivateRoute";
-
+import DetailCar from "../components/Home/sections/DetailCar";
 
 const AppRoutes = () => {
     return (
         <>
             <Switch>
                 <PrivateRoute path="/personal" component={Personal} />
-                <PrivateRoute path="/car" component={Car} />
+                <PrivateRoute path="/car" component={Car} exact />
                 <PrivateRoute path="/payment" component={Payment} />
-
                 <PrivateRoute path="/user" exact component={User} />
                 <PrivateRoute path="/user/detail" component={DetailUser} />
+                <PrivateRoute path="/car/detail" component={DetailCar} exact />
 
                 <Route path="/" exact>
                     <Home />
                 </Route>
+
                 <Route path="/login">
                     <Login />
                 </Route>
