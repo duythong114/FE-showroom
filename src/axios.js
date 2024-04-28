@@ -37,11 +37,10 @@ instance.interceptors.response.use(function (response) {
         // }
         case 402: {
             toast.error(errorMessage)
-            break;
+            return error
         }
         default: {
-            return
-            // return error
+            return error
         }
     }
 });

@@ -17,13 +17,10 @@ const HomeFooter = (props) => {
                 </div>
                 <div className="copyright">
                     &copy; 2024
-                    <a
-                        href="https://lnk.bio/ferrari"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <button
                     >
-                        https://lnk.bio/ferrari
-                    </a>
+                        LuxuryCar.com
+                    </button>
                 </div>
             </div>
         </div>

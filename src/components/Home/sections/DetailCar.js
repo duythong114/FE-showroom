@@ -23,10 +23,28 @@ const DetailCar = (props) => {
         )
     } else {
         return (
-            <div className='detail-car-container container'>
-                {detailCar &&
-                    <h1>Car: {detailCar.name}</h1>
-                }
+            <div className='detail-car-container'>
+                <div className='container'>
+                    {detailCar &&
+                        <div className='detail-car row'>
+                            <div className='img-car-container col-5'>
+                                <div
+                                    style={{ backgroundImage: `url(${detailCar.image})` }}
+                                    className='img-car'>
+                                </div>
+                            </div>
+
+                            <div className='info-car-container col-7'>
+                                <div className='info-car'>
+                                    <h1 className='car-name'>car name: {detailCar.name}</h1>
+                                    <h3>Description:</h3>
+                                    <p className='car-description'> {detailCar.description}</p>
+                                    <button className='btn btn-primary'>Booking</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
         )
     }

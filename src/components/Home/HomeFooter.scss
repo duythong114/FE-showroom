@@ -32,10 +32,16 @@
             font-size : 20px;
             color     : rgba(0, 0, 0, 0.6);
 
-            a {
-                margin-left    : 5px;
-                cursor         : pointer;
-                text-decoration: none;
+            button {
+                background-color: #E7E7E7;
+                margin-left     : 5px;
+                border          : none;
+                color           : #229AF5;
+                text-decoration : underline;
+
+                :hover {
+                    cursor: pointer;
+                }
             }
         }
     }
