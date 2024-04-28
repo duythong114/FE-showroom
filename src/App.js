@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import './styles/App.scss';
-import Nav from './components/Navbar/Nav'
+import NavHeader from './components/Navbar/NavHeader'
 import AppRoutes from './routes/AppRoutes';
 import {
   BrowserRouter as Router,
@@ -33,7 +33,7 @@ function App() {
       <>
         <Router>
           <div className='nav-container'>
-            <Nav />
+            <NavHeader />
           </div>
 
           <div className='app-container'>

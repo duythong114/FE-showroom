@@ -25,6 +25,9 @@ const DetailCar = (props) => {
         return (
             <div className='detail-car-container'>
                 <div className='container'>
+                    <h1 className='detail-car-title'>DETAIL CAR PAGE</h1>
+
+                    {/* detail-car-content */}
                     {detailCar &&
                         <div className='detail-car row'>
                             <div className='img-car-container col-5'>
@@ -36,7 +39,7 @@ const DetailCar = (props) => {
 
                             <div className='info-car-container col-7'>
                                 <div className='info-car'>
-                                    <h1 className='car-name'>car name: {detailCar.name}</h1>
+                                    <h2 className='car-name'>{detailCar.name}</h2>
                                     <h3>Description:</h3>
                                     <p className='car-description'> {detailCar.description}</p>
                                     <button className='btn btn-primary'>Booking</button>

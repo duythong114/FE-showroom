@@ -99,6 +99,8 @@ const Car = (props) => {
     return (
         <div className='car-container'>
             <div className='container'>
+                <h1 className='car-title'>MANAGE CAR</h1>
+
                 {/* create new car btn */}
                 <button
                     onClick={() => handleCreateCarBtn()}

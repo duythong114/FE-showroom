@@ -90,6 +90,8 @@ const User = (props) => {
     return (
         <div className='users-container' >
             <div className="container">
+                <h1 className='user-title'>MANAGE USER</h1>
+
                 <table className="table table-hover customers mt-3">
                     <thead>
                         <tr>

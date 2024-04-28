@@ -8,7 +8,8 @@ import Login from '../components/Auth/Login'
 import Register from '../components/Auth/Register'
 import User from '../components/ManageUser/User'
 import Car from "../components/Car/Car";
-import Payment from "../components/Payment/Payment";
+import ManageBooking from "../components/Booking/ManageBooking";
+import Booking from "../components/Booking/Booking";
 import Personal from "../components/Personal/Personal";
 import DetailUser from "../components/ManageUser/DetailUser";
 import PrivateRoute from "./PrivateRoute";
@@ -20,7 +21,8 @@ const AppRoutes = () => {
             <Switch>
                 <PrivateRoute path="/personal" component={Personal} />
                 <PrivateRoute path="/car" component={Car} exact />
-                <PrivateRoute path="/payment" component={Payment} />
+                <PrivateRoute path="/booking/manage" component={ManageBooking} exact />
+                <PrivateRoute path="/booking" component={Booking} exact />
                 <PrivateRoute path="/user" exact component={User} />
                 <PrivateRoute path="/user/detail" component={DetailUser} />
                 <PrivateRoute path="/car/detail" component={DetailCar} exact />
