@@ -160,7 +160,7 @@ export const carSlice = createSlice({
             })
             .addCase(getAllCars.rejected, (state, action) => {
                 state.isLoadingAllCars = false
-                state.isError = action.payload.message
+                state.isCarError = action.payload.message
             })
 
             // create a new car
@@ -172,7 +172,7 @@ export const carSlice = createSlice({
             })
             .addCase(creatNewCar.rejected, (state, action) => {
                 state.isCreatingCar = false
-                state.isError = action.payload.message
+                state.isCarError = action.payload.message
             })
 
             // delete car
@@ -184,7 +184,7 @@ export const carSlice = createSlice({
             })
             .addCase(deleteCar.rejected, (state, action) => {
                 state.isDeletingCar = false
-                state.isError = action.payload.message
+                state.isCarError = action.payload.message
             })
 
             // update car
@@ -196,7 +196,7 @@ export const carSlice = createSlice({
             })
             .addCase(updateCar.rejected, (state, action) => {
                 state.isUpdatingCar = false
-                state.isError = action.payload.message
+                state.isCarError = action.payload.message
             })
 
             // get bmw car
@@ -209,7 +209,7 @@ export const carSlice = createSlice({
             })
             .addCase(getBmwCar.rejected, (state, action) => {
                 state.isLoadingBmwCar = false
-                state.isError = action.payload.message
+                state.isCarError = action.payload.message
             })
 
             // get ferrari car
@@ -222,7 +222,7 @@ export const carSlice = createSlice({
             })
             .addCase(getFerrariCar.rejected, (state, action) => {
                 state.isLoadingFerrariCar = false
-                state.isError = action.payload.message
+                state.isCarError = action.payload.message
             })
 
             // get lamborghini car
@@ -235,7 +235,7 @@ export const carSlice = createSlice({
             })
             .addCase(getLamborghiniCar.rejected, (state, action) => {
                 state.isLoadingLamborghiniCar = false
-                state.isError = action.payload.message
+                state.isCarError = action.payload.message
             })
 
             // get car by id
@@ -248,7 +248,7 @@ export const carSlice = createSlice({
             })
             .addCase(getCarById.rejected, (state, action) => {
                 state.isLoadingCarById = false
-                state.isError = action.payload.message
+                state.isCarError = action.payload.message
             })
     },
 })

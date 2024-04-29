@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './Car.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactPaginate from 'react-paginate';
+import { toast } from 'react-toastify';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import { getAllCars } from '../../slices/carSlice'
-import ModalCreateCar from './ModalCreateCar'
 import { deleteCar } from '../../slices/carSlice'
+import ModalCreateCar from './ModalCreateCar'
 import ModalDeleteCar from './ModalDeleteCar';
-import { toast } from 'react-toastify';
 import ModalUpdateCar from './ModalUpdateCar';
 
 const Car = (props) => {
@@ -104,8 +104,8 @@ const Car = (props) => {
                 {/* create new car btn */}
                 <button
                     onClick={() => handleCreateCarBtn()}
-                    className='btn btn-primary'>
-                    Create new Car
+                    className='btn btn-primary mb-2'>
+                    Add Car
                 </button>
 
                 {/* car table */}

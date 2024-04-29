@@ -1,8 +1,9 @@
 import './DetailCar.scss'
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getCarById } from '../../../slices/carSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
+import ModalCreateBooking from '../../Booking/ModalCreateBooking';
 
 const DetailCar = (props) => {
     let queryParameter = props.location.search
@@ -12,10 +13,21 @@ const DetailCar = (props) => {
     const isLoadingCarById = useSelector(state => state.car.isLoadingCarById)
     const detailCar = useSelector(state => state.car.detailCar)
 
+    // modal create booking 
+    const [createModalShow, setCreateModalShow] = useState(false)
+
     useEffect(() => {
         dispatch(getCarById(carId))
         // eslint-disable-next-line
     }, [carId])
+
+    const handleBookingBtn = () => {
+        setCreateModalShow(true)
+    }
+
+    const handleCreateBookingClose = () => {
+        setCreateModalShow(false)
+    }
 
     if (isLoadingCarById) {
         return (
@@ -42,11 +54,19 @@ const DetailCar = (props) => {
                                     <h2 className='car-name'>{detailCar.name}</h2>
                                     <h3>Description:</h3>
                                     <p className='car-description'> {detailCar.description}</p>
-                                    <button className='btn btn-primary'>Booking</button>
+                                    <button
+                                        onClick={() => handleBookingBtn()}
+                                        className='btn btn-primary'
+                                    >Booking</button>
                                 </div>
                             </div>
                         </div>
                     }
+
+                    <ModalCreateBooking
+                        createBookingShow={createModalShow}
+                        createBookingClose={handleCreateBookingClose}
+                    />
                 </div>
             </div>
         )
