@@ -8,6 +8,8 @@ import {
     logoutUserService,
     deleteUserService,
     updateUserService,
+    updatePersonalService,
+    changePasswordService,
 } from '../services/userServices'
 
 export const loginUser = createAsyncThunk(
@@ -106,9 +108,33 @@ export const updateUser = createAsyncThunk(
     },
 )
 
+export const updatePersonal = createAsyncThunk(
+    'user/updatePersonal',
+    async (userData) => {
+        try {
+            const response = await updatePersonalService(userData)
+            return response
+        } catch (error) {
+            return error;
+        }
+    },
+)
+
+export const changePassword = createAsyncThunk(
+    'user/changePassword',
+    async (data) => {
+        try {
+            const response = await changePasswordService(data)
+            return response
+        } catch (error) {
+            return error;
+        }
+    },
+)
+
 const initialState = {
     // common state
-    isError: null,
+    isUserError: null,
 
     // login state
     isAuthenticated: false,
@@ -138,6 +164,12 @@ const initialState = {
 
     // update user
     isUpdatingUser: false,
+
+    // update user
+    isUpdatingPersonal: false,
+
+    // change password
+    isChangingPassword: false,
 }
 
 export const userSlice = createSlice({
@@ -161,7 +193,7 @@ export const userSlice = createSlice({
             .addCase(loginUser.rejected, (state, action) => {
                 state.isLogging = false
                 state.isAuthenticated = false
-                state.isError = action.payload.message
+                state.isUserError = action.payload.message
             })
 
         // logout user
@@ -176,7 +208,7 @@ export const userSlice = createSlice({
             })
             .addCase(logoutUser.rejected, (state, action) => {
                 state.isRemoving = false
-                state.isError = action.payload.message
+                state.isUserError = action.payload.message
             })
 
         // register new user
@@ -189,7 +221,7 @@ export const userSlice = createSlice({
             })
             .addCase(registerNewUser.rejected, (state, action) => {
                 state.isRegistering = false
-                state.isError = action.payload.message
+                state.isUserError = action.payload.message
             })
 
         // fetch all user
@@ -204,7 +236,7 @@ export const userSlice = createSlice({
             })
             .addCase(fetchAllUsers.rejected, (state, action) => {
                 state.isLoadingAllUsers = false
-                state.isError = action.payload.message
+                state.isUserError = action.payload.message
             })
 
         // fetch user by id
@@ -218,7 +250,7 @@ export const userSlice = createSlice({
             })
             .addCase(getUserById.rejected, (state, action) => {
                 state.isLoadingUserById = false
-                state.isError = action.payload.message
+                state.isUserError = action.payload.message
             })
 
         // refresh user when reload
@@ -234,7 +266,7 @@ export const userSlice = createSlice({
             .addCase(getUserRefresh.rejected, (state, action) => {
                 state.isAuthenticated = false
                 state.isRefreshingUser = false
-                // state.isError = action.payload.message
+                // state.isUserError = action.payload.message
             })
 
         // delete user 
@@ -247,10 +279,10 @@ export const userSlice = createSlice({
             })
             .addCase(deleteUser.rejected, (state, action) => {
                 state.isDeletingUser = false
-                state.isError = action.payload.message
+                state.isUserError = action.payload.message
             })
 
-        // delete user 
+        // update user 
         builder
             .addCase(updateUser.pending, (state, action) => {
                 state.isUpdatingUser = true
@@ -260,7 +292,34 @@ export const userSlice = createSlice({
             })
             .addCase(updateUser.rejected, (state, action) => {
                 state.isUpdatingUser = false
-                state.isError = action.payload.message
+                state.isUserError = action.payload.message
+            })
+
+        // update personal 
+        builder
+            .addCase(updatePersonal.pending, (state, action) => {
+                state.isUpdatingPersonal = true
+            })
+            .addCase(updatePersonal.fulfilled, (state, action) => {
+                state.isUpdatingPersonal = false
+                state.user = action.payload?.data
+            })
+            .addCase(updatePersonal.rejected, (state, action) => {
+                state.isUpdatingPersonal = false
+                state.isUserError = action.payload.message
+            })
+
+        // change password
+        builder
+            .addCase(changePassword.pending, (state, action) => {
+                state.isChangingPassword = true
+            })
+            .addCase(changePassword.fulfilled, (state, action) => {
+                state.isChangingPassword = false
+            })
+            .addCase(changePassword.rejected, (state, action) => {
+                state.isChangingPassword = false
+                state.isUserError = action.payload.message
             })
     },
 })

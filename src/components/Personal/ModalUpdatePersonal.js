@@ -1,35 +1,26 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import _ from 'lodash';
-import { updateUser } from '../../slices/userSlice'
-import { useDispatch } from 'react-redux';
+import { updatePersonal } from '../../slices/userSlice'
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { fetchAllUsers } from '../../slices/userSlice';
 
-const ModalUpdateUser = (props) => {
+const ModalUpdatePersonal = (props) => {
+    const userState = useSelector(state => state.user.user)
+
     const defaultState = {
-        firstName: '',
-        lastName: '',
-        address: '',
-        phoneNumber: '',
-        gender: '',
+        id: userState?.id,
+        firstName: userState?.firstName,
+        lastName: userState?.lastName,
+        address: userState?.address,
+        phoneNumber: userState?.phoneNumber,
+        gender: userState?.gender,
         // groupId: '',
     }
 
-    const dataModalUpdate = props.dataModalUpdate
-    const page = props.page
-    const limit = props.limit
-
     const [user, setUser] = useState(defaultState)
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        if (dataModalUpdate) {
-            setUser(dataModalUpdate)
-        }
-        // eslint-disable-next-line
-    }, [dataModalUpdate])
 
     const handleOnchangeInput = (value, name) => {
         let _userData = _.cloneDeep(user)
@@ -37,8 +28,8 @@ const ModalUpdateUser = (props) => {
         setUser(_userData)
     }
 
-    const handleUpdateUser = async () => {
-        let response = await dispatch(updateUser(user))
+    const handleUpdatePersonal = async () => {
+        let response = await dispatch(updatePersonal(user))
 
         if (response
             && response.payload
@@ -51,17 +42,15 @@ const ModalUpdateUser = (props) => {
 
         if (response && response.payload && response.payload.errorCode === 0) {
             toast.success(response.payload.errorMessage)
-            props.handleUpdateClose()
-            let pagination = { page, limit }
-            dispatch(fetchAllUsers(pagination))
+            props.updateModalClose()
         }
     }
 
     return (
         <>
-            <Modal show={props.updateShow} onHide={props.handleUpdateClose}>
+            <Modal show={props.updateModalShow} onHide={props.updateModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Update User: {dataModalUpdate.email}</Modal.Title>
+                    <Modal.Title>Update Personal Information</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -133,10 +122,10 @@ const ModalUpdateUser = (props) => {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={props.handleUpdateClose}>
+                    <Button variant="secondary" onClick={props.updateModalClose}>
                         Close
                     </Button>
-                    <Button variant="btn btn-primary" onClick={() => handleUpdateUser()}>
+                    <Button variant="btn btn-primary" onClick={() => handleUpdatePersonal()}>
                         Update
                     </Button>
                 </Modal.Footer>
@@ -145,4 +134,4 @@ const ModalUpdateUser = (props) => {
     )
 }
 
-export default ModalUpdateUser;
+export default ModalUpdatePersonal;

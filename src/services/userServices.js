@@ -46,7 +46,7 @@ const deleteUserService = (userId) => {
 }
 
 const updateUserService = (userData) => {
-    return axios.put('/api//user/update-user', {
+    return axios.put('/api/user/update-user', {
         id: userData.id,
         firstName: userData.firstName,
         lastName: userData.lastName,
@@ -54,6 +54,26 @@ const updateUserService = (userData) => {
         phoneNumber: userData.phoneNumber,
         gender: userData.gender,
         groupId: userData.groupId
+    })
+}
+
+const updatePersonalService = (userData) => {
+    return axios.put('/api/user/update-personal-user', {
+        id: userData.id,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        address: userData.address,
+        phoneNumber: userData.phoneNumber,
+        gender: userData.gender,
+        groupId: userData.groupId
+    })
+}
+
+const changePasswordService = (data) => {
+    return axios.put('/api/user/change-password', {
+        userId: data.userId,
+        password: data.password,
+        newPassword: data.newPassword,
     })
 }
 
@@ -66,4 +86,6 @@ export {
     getUserRefreshService,
     deleteUserService,
     updateUserService,
+    updatePersonalService,
+    changePasswordService,
 }
