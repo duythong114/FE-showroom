@@ -4,11 +4,13 @@ import React, { useEffect } from 'react';
 import { getBmwCar } from '../../../slices/carSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
+import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 
 const BMW = (props) => {
     const dispatch = useDispatch()
     const bmwCarList = useSelector(state => state.car.bmwCarList)
     const history = useHistory()
+    const isLoadingBmwCar = useSelector(state => state.car.isLoadingBmwCar)
 
     useEffect(() => {
         dispatch(getBmwCar())
@@ -26,26 +28,30 @@ const BMW = (props) => {
                     <span className='header-title'>BMW</span>
                     {/* <button className='header-btn'><span>SEE MORE</span></button> */}
                 </div>
-                <div className='section-body'>
-                    <Slider {...props.settings}>
-                        {bmwCarList && bmwCarList.length > 0 &&
-                            bmwCarList.map((item, index) => (
-                                <div className='img-container px-3' key={`bmw-${index}`}>
-                                    <div
-                                        onClick={() => handleDetailCarPage(item)}
-                                        className='img-customize'
-                                    >
+                {isLoadingBmwCar ?
+                    <LoadingSpinner />
+                    :
+                    <div className='section-body'>
+                        <Slider {...props.settings}>
+                            {bmwCarList && bmwCarList.length > 0 &&
+                                bmwCarList.map((item, index) => (
+                                    <div className='img-container px-3' key={`bmw-${index}`}>
                                         <div
-                                            style={{ backgroundImage: `url(${item.image})` }}
-                                            className='img-background'>
+                                            onClick={() => handleDetailCarPage(item)}
+                                            className='img-customize'
+                                        >
+                                            <div
+                                                style={{ backgroundImage: `url(${item.image})` }}
+                                                className='img-background'>
+                                            </div>
+                                            <div className='img-content'>{item.name}</div>
                                         </div>
-                                        <div className='img-content'>{item.name}</div>
                                     </div>
-                                </div>
-                            ))
-                        }
-                    </Slider>
-                </div>
+                                ))
+                            }
+                        </Slider>
+                    </div>
+                }
             </div>
         </div>
     )

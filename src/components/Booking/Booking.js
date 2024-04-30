@@ -1,16 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Booking.scss';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getBookingById } from '../../slices/bookingSlice'
 import { cancelBooking } from '../../slices/bookingSlice'
+import ModalCancelBooking from './ModalCancelBooking';
 
 const Booking = (props) => {
     const dispatch = useDispatch()
     const isLoadingBookingById = useSelector(state => state.booking.isLoadingBookingById)
     const detailBooking = useSelector(state => state.booking.detailBooking)
     const user = useSelector(state => state.user.user)
+
+    // cancel booking
+    const [cancelModalShow, setCancelModalShow] = useState(false)
+    const isCancelingBooking = useSelector(state => state.booking.isCancelingBooking)
 
     useEffect(() => {
         let userId = user?.id
@@ -20,7 +25,15 @@ const Booking = (props) => {
         // eslint-disable-next-line
     }, [])
 
-    const handleCancelBookingBtn = async () => {
+    const handleCancelBookingBtn = () => {
+        setCancelModalShow(true)
+    }
+
+    const handleCancelBookingClose = () => {
+        setCancelModalShow(false)
+    }
+
+    const handleCancelBooking = async () => {
         let bookingId = detailBooking?.id
         if (bookingId) {
             let response = await dispatch(cancelBooking(bookingId))
@@ -39,6 +52,7 @@ const Booking = (props) => {
                 if (userId) {
                     dispatch(getBookingById(userId))
                 }
+                setCancelModalShow(false)
             }
         }
     }
@@ -59,7 +73,7 @@ const Booking = (props) => {
                             <th scope="col">action</th>
                         </tr>
                     </thead>
-                    {isLoadingBookingById ?
+                    {(isLoadingBookingById || isCancelingBooking) ?
                         <tbody>
                             <tr>
                                 <td colSpan={6}><LoadingSpinner /></td>
@@ -98,6 +112,12 @@ const Booking = (props) => {
                         </tbody>
                     }
                 </table>
+
+                <ModalCancelBooking
+                    cancelBookingShow={cancelModalShow}
+                    cancelBookingClose={handleCancelBookingClose}
+                    handleCancelBooking={handleCancelBooking}
+                />
             </div>
         </div>
     )
