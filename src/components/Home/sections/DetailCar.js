@@ -4,10 +4,14 @@ import { getCarById } from '../../../slices/carSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 import ModalCreateBooking from '../../Booking/ModalCreateBooking';
+import LikeAndShareFacebook from '../../FacebookSDK/LikeAndShareFacebook'
+import CommentFacebook from '../../FacebookSDK/CommentFacebook'
 
 const DetailCar = (props) => {
     let queryParameter = props.location.search
     let carId = queryParameter.split("?id=")[1]
+
+    const dataHref = window.location.href
 
     const dispatch = useDispatch()
     const isLoadingCarById = useSelector(state => state.car.isLoadingCarById)
@@ -53,6 +57,9 @@ const DetailCar = (props) => {
                             <div className='info-car-container col-7'>
                                 <div className='info-car'>
                                     <h2 className='car-name'>{detailCar.name}</h2>
+
+                                    <LikeAndShareFacebook dataHref={dataHref} />
+
                                     <h3>Description:</h3>
                                     <p className='car-description'> {detailCar.description}</p>
                                     <button
@@ -61,6 +68,10 @@ const DetailCar = (props) => {
                                     >Booking</button>
                                 </div>
                             </div>
+
+                            <CommentFacebook
+                                dataHref={dataHref}
+                            />
                         </div>
                     }
 
