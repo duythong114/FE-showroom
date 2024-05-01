@@ -41,7 +41,7 @@ const Personal = (props) => {
                 <div className='container'>
                     <div className='row'>
                         {user &&
-                            <div className='personal-content col-6'>
+                            <div className='personal-content col-12 col-md-8 col-lg-6'>
                                 <div className='personal-title'>
                                     <h1>Personal Information</h1>
                                 </div>

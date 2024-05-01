@@ -60,64 +60,66 @@ const Booking = (props) => {
     return (
         <div className='booking-container'>
             <div className='container'>
-                <h1 className='booking-title'>YOUR BOOKING</h1>
+                <div className='row'>
+                    <h1 className='booking-title'>YOUR BOOKING</h1>
 
-                <table className="table table-hover customers mt-3">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">status</th>
-                            <th scope="col">time</th>
-                            <th scope="col">userName</th>
-                            <th scope="col">carName</th>
-                            <th scope="col">action</th>
-                        </tr>
-                    </thead>
-                    {(isLoadingBookingById || isCancelingBooking) ?
-                        <tbody>
+                    <table className="table table-hover customers mt-3 col-12">
+                        <thead>
                             <tr>
-                                <td colSpan={6}><LoadingSpinner /></td>
+                                <th scope="col">ID</th>
+                                <th scope="col">status</th>
+                                <th scope="col">time</th>
+                                <th scope="col">userName</th>
+                                <th scope="col">carName</th>
+                                <th scope="col">action</th>
                             </tr>
-                        </tbody>
-                        :
-                        <tbody>
-                            {detailBooking ?
+                        </thead>
+                        {(isLoadingBookingById || isCancelingBooking) ?
+                            <tbody>
                                 <tr>
-                                    <td>{detailBooking.id}</td>
-                                    <td>{detailBooking.status}</td>
-                                    <td>{detailBooking.time}</td>
-                                    <td>{detailBooking?.User?.firstName}</td>
-                                    <td>{detailBooking?.Car?.name}</td>
-                                    <td>
-                                        <div className='action-container'>
-                                            <button
-                                                onClick={() => handleCancelBookingBtn()}
-                                                className='btn btn-danger'>
-                                                Cancel
-                                            </button>
-                                        </div>
-                                    </td>
+                                    <td colSpan={6}><LoadingSpinner /></td>
                                 </tr>
-                                :
-                                <tr>
-                                    <td colSpan={6}>
-                                        <h3
-                                            style={{ textAlign: 'center' }}
-                                        >
-                                            You don't have any booking
-                                        </h3>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    }
-                </table>
+                            </tbody>
+                            :
+                            <tbody>
+                                {detailBooking ?
+                                    <tr>
+                                        <td>{detailBooking.id}</td>
+                                        <td>{detailBooking.status}</td>
+                                        <td>{detailBooking.time}</td>
+                                        <td>{detailBooking?.User?.firstName}</td>
+                                        <td>{detailBooking?.Car?.name}</td>
+                                        <td>
+                                            <div className='action-container'>
+                                                <button
+                                                    onClick={() => handleCancelBookingBtn()}
+                                                    className='btn btn-danger'>
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    :
+                                    <tr>
+                                        <td colSpan={6}>
+                                            <h3
+                                                style={{ textAlign: 'center' }}
+                                            >
+                                                You don't have any booking
+                                            </h3>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        }
+                    </table>
 
-                <ModalCancelBooking
-                    cancelBookingShow={cancelModalShow}
-                    cancelBookingClose={handleCancelBookingClose}
-                    handleCancelBooking={handleCancelBooking}
-                />
+                    <ModalCancelBooking
+                        cancelBookingShow={cancelModalShow}
+                        cancelBookingClose={handleCancelBookingClose}
+                        handleCancelBooking={handleCancelBooking}
+                    />
+                </div>
             </div>
         </div>
     )

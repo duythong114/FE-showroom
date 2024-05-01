@@ -107,10 +107,10 @@ const Login = (props) => {
                 <div className='container'>
                     <div className='row'>
                         <div className='col-4'></div>
-                        <div className='login-container col-4'>
+                        <div className='login-container col-12 col-md-6 col-lg-4'>
                             <div className='login-content row'>
                                 <form className="row g-3">
-                                    <div className='col-12 login-title'>LOGIN YOUR ACCOUNT</div>
+                                    <div className='col-12 login-title'>LOGIN</div>
                                     <div className='col-12 mt-3'>
                                         <label htmlFor="email">Email</label>
                                         <input

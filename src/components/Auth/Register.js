@@ -125,10 +125,10 @@ const Register = (props) => {
                 <div className='container'>
                     <div className='row'>
                         <div className='col-4'></div>
-                        <div className='register-container col-4'>
+                        <div className='register-container col-12 col-md-6 col-lg-4'>
                             <div className="register-content row">
                                 <form className="row g-3">
-                                    <div className='col-12 register-title'>REGISTER A NEW ACCOUNT</div>
+                                    <div className='col-12 register-title'>REGISTER</div>
                                     <div className="col-12">
                                         <label htmlFor="inputEmail">Email</label>
                                         <input
@@ -208,7 +208,7 @@ const Register = (props) => {
                                     </div>
 
                                     <div className="col-4">
-                                        <label htmlFor="inputPhoneNumber">Phone number</label>
+                                        <label htmlFor="inputPhoneNumber">Phone</label>
                                         <input
                                             value={phoneNumber}
                                             onChange={(event) => setPhoneNumber(event.target.value)}

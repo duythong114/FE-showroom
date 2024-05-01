@@ -47,14 +47,14 @@ const DetailCar = (props) => {
                     {/* detail-car-content */}
                     {detailCar &&
                         <div className='detail-car row'>
-                            <div className='img-car-container col-5'>
+                            <div className='img-car-container col-12 col-lg-5'>
                                 <div
                                     style={{ backgroundImage: `url(${detailCar.image})` }}
                                     className='img-car'>
                                 </div>
                             </div>
 
-                            <div className='info-car-container col-7'>
+                            <div className='info-car-container col-12 col-lg-7'>
                                 <div className='info-car'>
                                     <h2 className='car-name'>{detailCar.name}</h2>
 

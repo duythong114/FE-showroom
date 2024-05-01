@@ -1,20 +1,12 @@
-.detail-background {
-    position  : relative;
-    height    : 100vh;
+.detail-user-container {
+    height    : 1000px;
     background: grey;
     margin-top: 60px;
 
-    .detail-container {
+    .detail-content {
+        margin-top      : 40px;
         border-radius   : 20px;
         background-color: white;
-        position        : absolute;
-        top             : 0;
-        right           : 0;
-        left            : 0;
-        bottom          : 0;
-        margin          : auto;
-        height          : 85vh;
-        width           : 80vh;
         background-color: #000;
         word-wrap       : break-word;
 

@@ -8,11 +8,9 @@ const About = (props) => {
                 <div className='about-header section-header'>
                     <div className='about-title'>VIDEO ABOUT</div>
                 </div>
-                <div className='about-content'>
-                    <div className='about-video'>
+                <div className='about-content row'>
+                    <div className='about-video col-12'>
                         <iframe
-                            width="1250"
-                            height="703"
                             src="https://www.youtube.com/embed/AI7dOlAp-iE"
                             title="2024 Ferrari SF90 Spider Assetto Fiorano - Interior and Exterior Walkaround"
                             frameBorder="0"
