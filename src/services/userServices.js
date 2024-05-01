@@ -77,6 +77,12 @@ const changePasswordService = (data) => {
     })
 }
 
+const forgotPasswordService = (email) => {
+    return axios.put('/api/user/forgot-password', {
+        email: email,
+    })
+}
+
 export {
     loginUserService,
     logoutUserService,
@@ -88,4 +94,5 @@ export {
     updateUserService,
     updatePersonalService,
     changePasswordService,
+    forgotPasswordService,
 }

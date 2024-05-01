@@ -10,6 +10,7 @@ import {
     updateUserService,
     updatePersonalService,
     changePasswordService,
+    forgotPasswordService,
 } from '../services/userServices'
 
 export const loginUser = createAsyncThunk(
@@ -132,6 +133,18 @@ export const changePassword = createAsyncThunk(
     },
 )
 
+export const forgotPassword = createAsyncThunk(
+    'user/forgotPassword',
+    async (data) => {
+        try {
+            const response = await forgotPasswordService(data)
+            return response
+        } catch (error) {
+            return error;
+        }
+    },
+)
+
 const initialState = {
     // common state
     isUserError: null,
@@ -170,6 +183,9 @@ const initialState = {
 
     // change password
     isChangingPassword: false,
+
+    // forgot password
+    isRenewingPassword: false,
 }
 
 export const userSlice = createSlice({
@@ -319,6 +335,19 @@ export const userSlice = createSlice({
             })
             .addCase(changePassword.rejected, (state, action) => {
                 state.isChangingPassword = false
+                state.isUserError = action.payload.message
+            })
+
+        // forgot password
+        builder
+            .addCase(forgotPassword.pending, (state, action) => {
+                state.isRenewingPassword = true
+            })
+            .addCase(forgotPassword.fulfilled, (state, action) => {
+                state.isRenewingPassword = false
+            })
+            .addCase(forgotPassword.rejected, (state, action) => {
+                state.isRenewingPassword = false
                 state.isUserError = action.payload.message
             })
     },

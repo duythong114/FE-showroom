@@ -12,6 +12,7 @@ const DetailCar = (props) => {
     const dispatch = useDispatch()
     const isLoadingCarById = useSelector(state => state.car.isLoadingCarById)
     const detailCar = useSelector(state => state.car.detailCar)
+    const isCreatingBooking = useSelector(state => state.booking.isCreatingBooking)
 
     // modal create booking 
     const [createModalShow, setCreateModalShow] = useState(false)
@@ -29,7 +30,7 @@ const DetailCar = (props) => {
         setCreateModalShow(false)
     }
 
-    if (isLoadingCarById) {
+    if (isLoadingCarById || isCreatingBooking) {
         return (
             <LoadingSpinner />
         )

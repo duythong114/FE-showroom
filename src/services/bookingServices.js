@@ -10,6 +10,9 @@ const createNewBookingService = (data) => {
         time: data.time,
         carId: data.carId,
         userId: data.userId,
+        firstName: data.firstName,
+        email: data.email,
+        carName: data.carName,
     })
 }
 

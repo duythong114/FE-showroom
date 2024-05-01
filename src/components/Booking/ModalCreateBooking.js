@@ -15,8 +15,11 @@ const ModalCreateBooking = (props) => {
 
     const handleCreateNewBooking = async () => {
         let userId = user?.id
+        let firstName = user?.firstName
+        let email = user?.email
+        let carName = detailCar?.name
         let carId = detailCar?.id
-        let data = { time, carId, userId }
+        let data = { time, carId, userId, email, carName, firstName }
         let response = await dispatch(creatNewBooking(data))
 
         if (response

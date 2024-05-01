@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../slices/userSlice';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import ModalForgotPassword from './ModalForgotPassword'
 
 const Login = (props) => {
     const history = useHistory()
@@ -17,6 +18,17 @@ const Login = (props) => {
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    // modal forgot password
+    const [showModalForgotPassword, setShowModalForgotPassword] = useState(false)
+    const isRenewingPassword = useSelector(state => state.user.isRenewingPassword)
+
+    useEffect(() => {
+        if (isAuthenticated && user) {
+            history.push('/')
+        }
+        // eslint-disable-next-line
+    }, [])
 
     const handleRegisterPageBtn = () => {
         history.push('/register')
@@ -77,14 +89,15 @@ const Login = (props) => {
         }
     }
 
-    useEffect(() => {
-        if (isAuthenticated && user) {
-            history.push('/')
-        }
-        // eslint-disable-next-line
-    }, [])
+    const handleForgotPasswordSpan = () => {
+        setShowModalForgotPassword(true)
+    }
 
-    if (isLogging) {
+    const handleForgotPasswordModalClose = () => {
+        setShowModalForgotPassword(false)
+    }
+
+    if (isLogging || isRenewingPassword) {
         return (
             <LoadingSpinner />
         )
@@ -137,7 +150,12 @@ const Login = (props) => {
                                         </button>
                                     </div>
                                     <div className='col-12 mt-3'>
-                                        <span className='forgot-password'>Forgot your password?</span>
+                                        <span
+                                            onClick={() => handleForgotPasswordSpan()}
+                                            className='forgot-password'
+                                        >
+                                            Forgot your password?
+                                        </span>
                                     </div>
 
                                     <hr className='mt-3' />
@@ -166,6 +184,11 @@ const Login = (props) => {
                         </div>
                         <div className='col-4'></div>
                     </div>
+
+                    <ModalForgotPassword
+                        passwordModalShow={showModalForgotPassword}
+                        passwordModalClose={handleForgotPasswordModalClose}
+                    />
                 </div>
             </div>
         )
