@@ -35,8 +35,8 @@ const LikeAndShareFacebook = (props) => {
         <>
             <div
                 class="fb-like"
-                // data-href={dataHref}
-                data-href="https://developers.facebook.com/docs/plugins/"
+                data-href={dataHref}
+                // data-href="https://developers.facebook.com/docs/plugins/"
                 data-width=""
                 data-layout=""
                 data-action=""

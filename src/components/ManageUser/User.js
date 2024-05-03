@@ -20,7 +20,7 @@ const User = (props) => {
     const isLoadingAllUsers = useSelector(state => state.user.isLoadingAllUsers)
     const [page, setPage] = useState(1)
     // eslint-disable-next-line
-    const [limit, setLimit] = useState(2)
+    const [limit, setLimit] = useState(4)
 
     // delete modal
     const isDeletingUser = useSelector(state => state.user.isDeletingUser)

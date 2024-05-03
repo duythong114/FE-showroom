@@ -18,7 +18,7 @@ const ManageBooking = (props) => {
     const isLoadingAllBookings = useSelector(state => state.booking.isLoadingAllBookings)
     const [page, setPage] = useState(1)
     // eslint-disable-next-line
-    const [limit, setLimit] = useState(2)
+    const [limit, setLimit] = useState(4)
 
     // delete booking
     const [deleteModalShow, setDeleteModalShow] = useState(false)
