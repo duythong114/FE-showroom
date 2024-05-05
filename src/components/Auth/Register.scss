@@ -3,15 +3,16 @@
     background: linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
 
     .register-container {
-        border-radius   : 10px;
-        background-color: white;
-        position        : absolute;
-        margin          : auto;
-        top             : 0;
-        bottom          : 0;
-        right           : 0;
-        left            : 0;
-        height          : 650px;
+        margin-top               : 80px;
+        border-radius            : 10px;
+        background-color         : white;
+        // position              : absolute;
+        // margin          : auto;
+        // top             : 0;
+        // bottom          : 0;
+        // right           : 0;
+        // left            : 0;
+        // height             : 730px;
 
         .register-content {
             padding: 10px;
@@ -46,6 +47,15 @@
                 border-radius: 15px;
                 outline      : none;
                 border       : none;
+                background   : linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
+                color        : white;
+            }
+
+            .btn-comback-customize {
+                border-radius: 15px;
+                outline      : none;
+                border       : none;
+                margin-top   : 10px;
                 background   : linear-gradient(135deg, rgba(34, 193, 195, 1) 0%, rgba(253, 187, 45, 1) 100%);
                 color        : white;
             }

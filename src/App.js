@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import './styles/App.scss';
@@ -10,15 +10,12 @@ import {
 import { getUserRefresh } from './slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
-import { Scrollbars } from 'react-custom-scrollbars';
 
 function App() {
   const dispatch = useDispatch()
   const isRefreshingUser = useSelector(state => state.user.isRefreshingUser)
   const isRemoving = useSelector(state => state.user.isRemoving)
   const user = useSelector(state => state.user.user)
-  const [scrollHeight, setScrollHeight] = useState(0)
-  const [scrollWidth, setScrollWidth] = useState(0)
 
   useEffect(() => {
     if (!user) {
@@ -27,20 +24,13 @@ function App() {
     // eslint-disable-next-line
   }, [user])
 
-  useEffect(() => {
-    let windowHeight = window.innerHeight
-    let windowWidth = window.innerWidth
-    setScrollHeight(windowHeight)
-    setScrollWidth(windowWidth)
-  }, [])
-
   if (isRefreshingUser || isRemoving) {
     return (
       <LoadingSpinner />
     )
   } else {
     return (
-      <Scrollbars style={{ width: scrollWidth, height: scrollHeight }}>
+      <div>
         <Router>
           <div className='nav-container'>
             <NavHeader />
@@ -64,7 +54,7 @@ function App() {
           pauseOnHover
           theme="light"
         />
-      </Scrollbars>
+      </div>
     )
   }
 }

@@ -32,7 +32,7 @@ const ModalForgotPassword = (props) => {
         <>
             <Modal show={props.passwordModalShow} onHide={props.passwordModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Send new password to your email address</Modal.Title>
+                    <Modal.Title>Send new password to your email</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">

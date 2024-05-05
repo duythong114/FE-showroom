@@ -9,9 +9,12 @@ import { deleteCar } from '../../slices/carSlice'
 import ModalCreateCar from './ModalCreateCar'
 import ModalDeleteCar from './ModalDeleteCar';
 import ModalUpdateCar from './ModalUpdateCar';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const Car = (props) => {
     const dispatch = useDispatch();
+    const [scrollHeight, setScrollHeight] = useState(0)
+    const [scrollWidth, setScrollWidth] = useState(0)
 
     // pagination
     const totalCarPages = useSelector(state => state.car.totalCarPages)
@@ -40,6 +43,13 @@ const Car = (props) => {
         dispatch(getAllCars(pagination))
         // eslint-disable-next-line
     }, [page])
+
+    useEffect(() => {
+        let windowWidth = window.innerWidth
+        let windowHeight = window.innerHeight
+        setScrollHeight(windowHeight)
+        setScrollWidth(windowWidth)
+    }, [scrollWidth, scrollHeight])
 
     // this function is from react-paginate
     const handlePageClick = (event) => {
@@ -97,119 +107,121 @@ const Car = (props) => {
     }
 
     return (
-        <div className='car-container'>
-            <div className='container'>
-                <h1 className='car-title'>MANAGE CAR</h1>
+        <Scrollbars style={{ width: scrollWidth, height: scrollHeight }}>
+            <div className='car-container'>
+                <div className='container'>
+                    <h1 className='car-title'>MANAGE CAR</h1>
 
-                {/* create new car btn */}
-                <button
-                    onClick={() => handleCreateCarBtn()}
-                    className='btn btn-primary mb-2'>
-                    Add Car
-                </button>
+                    {/* create new car btn */}
+                    <button
+                        onClick={() => handleCreateCarBtn()}
+                        className='btn btn-primary mb-2'>
+                        Add Car
+                    </button>
 
-                {/* car table */}
-                <table className="table table-hover customers mt-3">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">name</th>
-                            <th scope="col">model</th>
-                            <th scope="col">image</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    {(isLoadingAllCars || isCreatingCar || isDeletingCar || isUpdatingCar) ?
-                        <tbody>
+                    {/* car table */}
+                    <table className="table table-hover customers mt-3">
+                        <thead>
                             <tr>
-                                <td colSpan={6}><LoadingSpinner /></td>
+                                <th scope="col">ID</th>
+                                <th scope="col">name</th>
+                                <th scope="col">model</th>
+                                <th scope="col">image</th>
+                                <th scope="col">Actions</th>
                             </tr>
-                        </tbody>
-                        :
-                        <tbody>
-                            {carList && carList.length > 0 ?
-                                carList.map((item, index) => (
-                                    <tr key={`car-${index}`}>
-                                        <td>{item.id}</td>
-                                        <td>{item.name}</td>
-                                        <td>{item.model}</td>
-                                        <td>{item.image}</td>
-                                        <td>
-                                            <div className='action-container'>
-                                                <button
-                                                    onClick={() => handleUpdateCarBtn(item)}
-                                                    className='btn btn-warning'
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDeleteCarBtn(item)}
-                                                    className='btn btn-danger'>
-                                                    Delete
-                                                </button>
-                                            </div>
+                        </thead>
+                        {(isLoadingAllCars || isCreatingCar || isDeletingCar || isUpdatingCar) ?
+                            <tbody>
+                                <tr>
+                                    <td colSpan={6}><LoadingSpinner /></td>
+                                </tr>
+                            </tbody>
+                            :
+                            <tbody>
+                                {carList && carList.length > 0 ?
+                                    carList.map((item, index) => (
+                                        <tr key={`car-${index}`}>
+                                            <td>{item.id}</td>
+                                            <td>{item.name}</td>
+                                            <td>{item.model}</td>
+                                            <td>{item.image}</td>
+                                            <td>
+                                                <div className='action-container'>
+                                                    <button
+                                                        onClick={() => handleUpdateCarBtn(item)}
+                                                        className='btn btn-warning'
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDeleteCarBtn(item)}
+                                                        className='btn btn-danger'>
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                    :
+                                    <tr>
+                                        <td colSpan={6}>
+
                                         </td>
                                     </tr>
-                                ))
-                                :
-                                <tr>
-                                    <td colSpan={6}>
+                                }
+                            </tbody>
+                        }
+                    </table>
 
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
+                    {/* pagination */}
+                    {
+                        totalCarPages && totalCarPages > 0 &&
+                        <ReactPaginate
+                            nextLabel="next >"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={2}
+                            marginPagesDisplayed={2}
+                            pageCount={totalCarPages}
+                            previousLabel="< previous"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            breakLabel="..."
+                            breakClassName="page-item"
+                            breakLinkClassName="page-link"
+                            containerClassName="pagination"
+                            activeClassName="active"
+                            renderOnZeroPageCount={null}
+                        />
                     }
-                </table>
 
-                {/* pagination */}
-                {
-                    totalCarPages && totalCarPages > 0 &&
-                    <ReactPaginate
-                        nextLabel="next >"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={2}
-                        marginPagesDisplayed={2}
-                        pageCount={totalCarPages}
-                        previousLabel="< previous"
-                        pageClassName="page-item"
-                        pageLinkClassName="page-link"
-                        previousClassName="page-item"
-                        previousLinkClassName="page-link"
-                        nextClassName="page-item"
-                        nextLinkClassName="page-link"
-                        breakLabel="..."
-                        breakClassName="page-item"
-                        breakLinkClassName="page-link"
-                        containerClassName="pagination"
-                        activeClassName="active"
-                        renderOnZeroPageCount={null}
+                    <ModalCreateCar
+                        createCarShow={createModalShow}
+                        createCarClose={handleCreateCarClose}
+                        page={page}
+                        limit={limit}
                     />
-                }
 
-                <ModalCreateCar
-                    createCarShow={createModalShow}
-                    createCarClose={handleCreateCarClose}
-                    page={page}
-                    limit={limit}
-                />
+                    <ModalDeleteCar
+                        deleteCarShow={deleteModalShow}
+                        deleteCarClose={handleDeleteCarClose}
+                        dataDeleteModal={dataDeleteModal}
+                        handleDeleteCar={handleDeleteCar}
+                    />
 
-                <ModalDeleteCar
-                    deleteCarShow={deleteModalShow}
-                    deleteCarClose={handleDeleteCarClose}
-                    dataDeleteModal={dataDeleteModal}
-                    handleDeleteCar={handleDeleteCar}
-                />
-
-                <ModalUpdateCar
-                    updateCarShow={updateModalShow}
-                    updateCarClose={handleUpdateCarClose}
-                    dataUpdateModal={dataUpdateModal}
-                    page={page}
-                    limit={limit}
-                />
-            </div>
-        </div >
+                    <ModalUpdateCar
+                        updateCarShow={updateModalShow}
+                        updateCarClose={handleUpdateCarClose}
+                        dataUpdateModal={dataUpdateModal}
+                        page={page}
+                        limit={limit}
+                    />
+                </div>
+            </div >
+        </Scrollbars>
     )
 }
 

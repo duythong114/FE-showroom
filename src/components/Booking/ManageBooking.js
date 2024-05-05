@@ -8,9 +8,12 @@ import { getProcessBooking } from '../../slices/bookingSlice'
 import ModalDeleteBooking from './ModalDeleteBooking'
 import { deleteBooking } from '../../slices/bookingSlice'
 import ModalUpdateBooking from './ModalUpdateBooking'
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const ManageBooking = (props) => {
     const dispatch = useDispatch()
+    const [scrollHeight, setScrollHeight] = useState(0)
+    const [scrollWidth, setScrollWidth] = useState(0)
 
     // pagination
     const totalBookingPages = useSelector(state => state.booking.totalBookingPages)
@@ -35,6 +38,13 @@ const ManageBooking = (props) => {
         dispatch(getProcessBooking(pagination))
         // eslint-disable-next-line
     }, [page])
+
+    useEffect(() => {
+        let windowWidth = window.innerWidth
+        let windowHeight = window.innerHeight
+        setScrollHeight(windowHeight)
+        setScrollWidth(windowWidth)
+    }, [scrollWidth, scrollHeight])
 
     // this function is from react-paginate
     const handlePageClick = (event) => {
@@ -84,106 +94,108 @@ const ManageBooking = (props) => {
     }
 
     return (
-        <div className='manage-booking-container'>
-            <div className='container'>
-                <h1 className='manage-booking-title'>MANAGE BOOKING</h1>
+        <Scrollbars style={{ width: scrollWidth, height: scrollHeight }}>
+            <div className='manage-booking-container'>
+                <div className='container'>
+                    <h1 className='manage-booking-title'>MANAGE BOOKING</h1>
 
-                <table className="table table-hover customers mt-3">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">status</th>
-                            <th scope="col">time</th>
-                            <th scope="col">userName</th>
-                            <th scope="col">carName</th>
-                            <th scope="col">actions</th>
-                        </tr>
-                    </thead>
-                    {(isLoadingAllBookings || isDeletingBooking || isUpdatingBooking) ?
-                        <tbody>
+                    <table className="table table-hover customers mt-3">
+                        <thead>
                             <tr>
-                                <td colSpan={6}><LoadingSpinner /></td>
+                                <th scope="col">ID</th>
+                                <th scope="col">status</th>
+                                <th scope="col">time</th>
+                                <th scope="col">userName</th>
+                                <th scope="col">carName</th>
+                                <th scope="col">actions</th>
                             </tr>
-                        </tbody>
-                        :
-                        <tbody>
-                            {bookingList && bookingList.length > 0 ?
-                                bookingList.map((item, index) => (
-                                    <tr key={`booking-${index}`}>
-                                        <td>{item.id}</td>
-                                        <td>{item.status}</td>
-                                        <td>{item.time}</td>
-                                        <td>{item?.User?.firstName}</td>
-                                        <td>{item?.Car?.name}</td>
-                                        <td>
-                                            <div className='action-container'>
-                                                <button
-                                                    onClick={() => handleUpdateBookingBtn(item)}
-                                                    className='btn btn-warning'
-                                                >
-                                                    Edit
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDeleteBookingBtn(item)}
-                                                    className='btn btn-danger'>
-                                                    Delete
-                                                </button>
-                                            </div>
+                        </thead>
+                        {(isLoadingAllBookings || isDeletingBooking || isUpdatingBooking) ?
+                            <tbody>
+                                <tr>
+                                    <td colSpan={6}><LoadingSpinner /></td>
+                                </tr>
+                            </tbody>
+                            :
+                            <tbody>
+                                {bookingList && bookingList.length > 0 ?
+                                    bookingList.map((item, index) => (
+                                        <tr key={`booking-${index}`}>
+                                            <td>{item.id}</td>
+                                            <td>{item.status}</td>
+                                            <td>{item.time}</td>
+                                            <td>{item?.User?.firstName}</td>
+                                            <td>{item?.Car?.name}</td>
+                                            <td>
+                                                <div className='action-container'>
+                                                    <button
+                                                        onClick={() => handleUpdateBookingBtn(item)}
+                                                        className='btn btn-warning'
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDeleteBookingBtn(item)}
+                                                        className='btn btn-danger'>
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                    :
+                                    <tr>
+                                        <td colSpan={6}>
+
                                         </td>
                                     </tr>
-                                ))
-                                :
-                                <tr>
-                                    <td colSpan={6}>
+                                }
+                            </tbody>
+                        }
+                    </table>
 
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
+                    {/* pagination */}
+                    {
+                        totalBookingPages && totalBookingPages > 0 &&
+                        <ReactPaginate
+                            nextLabel="next >"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={2}
+                            marginPagesDisplayed={2}
+                            pageCount={totalBookingPages}
+                            previousLabel="< previous"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            breakLabel="..."
+                            breakClassName="page-item"
+                            breakLinkClassName="page-link"
+                            containerClassName="pagination"
+                            activeClassName="active"
+                            renderOnZeroPageCount={null}
+                        />
                     }
-                </table>
 
-                {/* pagination */}
-                {
-                    totalBookingPages && totalBookingPages > 0 &&
-                    <ReactPaginate
-                        nextLabel="next >"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={2}
-                        marginPagesDisplayed={2}
-                        pageCount={totalBookingPages}
-                        previousLabel="< previous"
-                        pageClassName="page-item"
-                        pageLinkClassName="page-link"
-                        previousClassName="page-item"
-                        previousLinkClassName="page-link"
-                        nextClassName="page-item"
-                        nextLinkClassName="page-link"
-                        breakLabel="..."
-                        breakClassName="page-item"
-                        breakLinkClassName="page-link"
-                        containerClassName="pagination"
-                        activeClassName="active"
-                        renderOnZeroPageCount={null}
+                    <ModalDeleteBooking
+                        deleteBookingShow={deleteModalShow}
+                        deleteBookingClose={handleDeleteBookingClose}
+                        handleDeleteBooking={handleDeleteBooking}
+                        dataDeleteModal={dataDeleteModal}
                     />
-                }
 
-                <ModalDeleteBooking
-                    deleteBookingShow={deleteModalShow}
-                    deleteBookingClose={handleDeleteBookingClose}
-                    handleDeleteBooking={handleDeleteBooking}
-                    dataDeleteModal={dataDeleteModal}
-                />
-
-                <ModalUpdateBooking
-                    updateBookingShow={updateModalShow}
-                    updateBookingClose={handleUpdateBookingClose}
-                    dataUpdateModal={dataUpdateModal}
-                    page={page}
-                    limit={limit}
-                />
+                    <ModalUpdateBooking
+                        updateBookingShow={updateModalShow}
+                        updateBookingClose={handleUpdateBookingClose}
+                        dataUpdateModal={dataUpdateModal}
+                        page={page}
+                        limit={limit}
+                    />
+                </div>
             </div>
-        </div>
+        </Scrollbars>
     )
 }
 

@@ -18,25 +18,25 @@ const HomeHeader = (props) => {
                             <div className='icon-child'>
                                 <i className="fa-solid fa-car"></i>
                             </div>
-                            <div className='text-child'>Car</div>
+                            {/* <div className='text-child'>Car</div> */}
                         </div>
                         <div className='option-child'>
                             <div className='icon-child'>
                                 <i className="fa-solid fa-motorcycle"></i>
                             </div>
-                            <div className='text-child'>Motor</div>
+                            {/* <div className='text-child'>Motor</div> */}
                         </div>
                         <div className='option-child'>
                             <div className='icon-child'>
                                 <i className="fa-solid fa-cart-shopping"></i>
                             </div>
-                            <div className='text-child'>Cart</div>
+                            {/* <div className='text-child'>Cart</div> */}
                         </div>
                         <div className='option-child'>
                             <div className='icon-child'>
                                 <i className="fa-regular fa-credit-card"></i>
                             </div>
-                            <div className='text-child'>Credit</div>
+                            {/* <div className='text-child'>Credit</div> */}
                         </div>
                     </div>
                 </div>

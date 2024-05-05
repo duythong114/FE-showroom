@@ -97,6 +97,10 @@ const Login = (props) => {
         setShowModalForgotPassword(false)
     }
 
+    const handleComeBackBtn = () => {
+        history.push('/')
+    }
+
     if (isLogging || isRenewingPassword) {
         return (
             <LoadingSpinner />
@@ -106,8 +110,8 @@ const Login = (props) => {
             <div className='login-background'>
                 <div className='container'>
                     <div className='row'>
-                        <div className='col-4'></div>
-                        <div className='login-container col-12 col-md-6 col-lg-4'>
+                        <div className='col-3'></div>
+                        <div className='login-container col-12 col-md-6 col-lg-6'>
                             <div className='login-content row'>
                                 <form className="row g-3">
                                     <div className='col-12 login-title'>LOGIN</div>
@@ -170,19 +174,27 @@ const Login = (props) => {
                                         </button>
                                     </div>
 
-                                    <hr className='mt-3' />
+                                    {/* <hr className='mt-3' /> */}
 
-                                    <div className='col-12 text-center mt-3'>
+                                    <div className='col-12 my-3'>
+                                        <button
+                                            onClick={() => handleComeBackBtn()}
+                                            className='btn btn-comback-customize'
+                                        >Come Back
+                                        </button>
+                                    </div>
+
+                                    {/* <div className='col-12 text-center mt-3'>
                                         <span>Or Login with:</span>
                                     </div>
                                     <div className='col-12 login-social'>
                                         <i className="fab fa-google google"></i>
                                         <i className='fab fa-facebook-f facebook'></i>
-                                    </div>
+                                    </div> */}
                                 </form>
                             </div>
                         </div>
-                        <div className='col-4'></div>
+                        <div className='col-3'></div>
                     </div>
 
                     <ModalForgotPassword

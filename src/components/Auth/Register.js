@@ -115,6 +115,10 @@ const Register = (props) => {
         // eslint-disable-next-line
     }, [])
 
+    const handleComeBackBtn = () => {
+        history.push('/login')
+    }
+
     if (isRegistering) {
         return (
             <LoadingSpinner />
@@ -124,10 +128,10 @@ const Register = (props) => {
             <div className='register-background'>
                 <div className='container'>
                     <div className='row'>
-                        <div className='col-4'></div>
-                        <div className='register-container col-12 col-md-6 col-lg-4'>
+                        <div className='col-3'></div>
+                        <div className='register-container col-12 col-md-6 col-lg-6'>
                             <div className="register-content row">
-                                <form className="row g-3">
+                                <form className="row g-2">
                                     <div className='col-12 register-title'>REGISTER</div>
                                     <div className="col-12">
                                         <label htmlFor="inputEmail">Email</label>
@@ -243,6 +247,7 @@ const Register = (props) => {
                                             <option value="3">Manager</option>
                                         </select>
                                     </div>
+                                    <hr className='mt-3' />
                                     <div className='col-12 mt-3'>
                                         <button
                                             onClick={() => handleRegisterBtn()}
@@ -251,10 +256,17 @@ const Register = (props) => {
                                             Register
                                         </button>
                                     </div>
+                                    <div className='col-12 my-3'>
+                                        <button
+                                            onClick={() => handleComeBackBtn()}
+                                            className='btn btn-comback-customize'
+                                        >Come Back
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
-                        <div className='col-4'></div>
+                        <div className='col-3'></div>
                     </div>
                 </div>
             </div>
