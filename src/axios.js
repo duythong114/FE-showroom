@@ -9,7 +9,7 @@ const instance = axios.create({
 axiosRetry(instance, {
     retries: 3,
     retryCondition: (error) => {
-        return error.response.status === 401
+        return error.response.status === 405
     },
     shouldResetTimeout: true,
     retryDelay: (retryCount, error) => {
@@ -35,7 +35,7 @@ instance.interceptors.response.use(function (response) {
         //     // toast.error(errorMessage)
         //     break;
         // }
-        case 402: {
+        case 403: {
             toast.error(errorMessage)
             return error
         }
